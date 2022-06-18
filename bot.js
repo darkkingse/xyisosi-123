@@ -4320,8 +4320,7 @@ vk.updates.hear(/^(?:вылечить)\s?([0-9]+)?/i, (message) => {
 	user_id.hp = 100;
 	user_id.balance -= Number(organizations.hospital.money)
 	user_id.sick = false
-	//user.balance += organizations.hospital.money
-	organizations.hospital.money += Number(user.balance)
+	user.balance += Number(organizations.hospital.money)
 	organizations.hospital.balance += organizations.hospital.money * 2
 	return message.send(`Вы вылечили игрока @id${user_id.id}(${user_id.prefix})👨‍⚕ \n 💰 Вы заработали ${organizations.hospital.money}$ 💵 за лечение пациента! \n 💰 Ваш Баланс: ${spaces(user.balance)}$ `)
 })
