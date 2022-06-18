@@ -1460,7 +1460,7 @@ vk.updates.hear(/^(?:копать руду 1)$/i, (message) => {
 	user.balance += summa;
 	user.golod -= 5;
 	user.kirka -= 5;
-	user.opit += 1;
+	user.opit += 3;
 	user.ryda += ryda;
 	user.gold += gold;
 	user.silver += silver;
@@ -1479,7 +1479,7 @@ vk.updates.hear(/^(?:копать руду 1)$/i, (message) => {
 
 💰 Заработано:
 💵 Денег: ${summa}
-🔸 Опыт: +1
+🔸 Опыт: +3
 
 ❓ Показатели уменьшены: 
 ⛏ Прочность кирки: ${user.kirka}%
@@ -1495,14 +1495,14 @@ vk.updates.hear(/^(?:копать руду 2)$/i, (message) => {
 	if (!organizations.mine.status) {
 		return message.send(`Шахта закрыта владельцем @id${organizations.mine.owner}(${user_prefix.prefix})`)
 	}
-	let ryda = utils.random(15, 25);
-	let summa = utils.random(150, 500);
-	let gold = utils.random(7, 14);
-	let silver = utils.random(8, 16);
-	let metall = utils.random(7, 14);
-	let iron = utils.random(9, 18);
-	let copper = utils.random(9, 18);
-	let stone = utils.random(12, 24);
+	let ryda = utils.random(20, 35); 
+    let summa = utils.random(150, 500); 
+    let gold = utils.random(12, 23); 
+    let silver = utils.random(12, 24); 
+    let metall = utils.random(13, 26); 
+    let iron = utils.random(14, 30); 
+    let copper = utils.random(16, 35); 
+    let stone = utils.random(20, 38);
 	let hp = utils.random(2, 5);
 
 	if (user.kirka < 5) {
@@ -1548,7 +1548,7 @@ vk.updates.hear(/^(?:копать руду 2)$/i, (message) => {
 
 💰 Заработано:
 💵 Денег: ${summa}
-🔸 Опыт: +1
+🔸 Опыт: +2
 
 ❓ Показатели уменьшены: 
 ⛏ Прочность кирки: ${user.kirka}%
@@ -1566,6 +1566,7 @@ vk.updates.hear(/^(?:шахта меню)$/i, (message) => {
 	} else {
 		return message.send(`Вы открыли меню магазина!
 		💰 Счет магазина: ${spaces(organizations.mine.balance)}
+		
 		📕 Команды для владельца магазина:
 		1. ⛔  шахта закрыть - закрыть шахту
 		2. ✅ Шахта открыть - открыть шахту
@@ -3376,7 +3377,7 @@ vk.updates.hear(/^(?:get)\s?([0-9]+)?/i, (message) => {
 		🔻 Уровень: ${user.level}
 		💡 Очки опыта: ${user.exs}/${user.uplvl} 
 
-		💰 Баланс: ${user.balance}$
+		💰 Баланс: ${spaces(user.balance)}$
 		💳 В банке: ${user.bank}$ 
 		💎 Donat-Money: ${user.donate}
 
