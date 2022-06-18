@@ -1332,7 +1332,7 @@ vk.updates.hear(/^(?:инвентарь|инв|inv|inventory)/i, (message) => {
 ⚪ Железо: ${user.iron}
 ▫Серебро: ${user.silver}
 🔸 Золото: ${user.gold}
-◽ Металл: ${metall} 
+◽ Металл: ${user.metall} 
 
 
 	`
