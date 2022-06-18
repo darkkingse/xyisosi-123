@@ -2637,7 +2637,7 @@ vk.updates.hear(/^(?:бизнес)\s?([0-9]+)?/i, (message) => {
 			return message.send(
 				`🏤 Бизнес: ${businesses[user.business].name}
 💰 Прибыль: ${businesses[user.business].earn} $/час\n
-💰 На счету: ${user.bizbalance}$\n🔸 
+💰 На счету: ${spaces(user.bizbalance)}$\n🔸 
 Что бы снять деньги с бизнеса, ввведите "Снять [кол-во]"`
 			);
 		}
@@ -4370,8 +4370,8 @@ vk.updates.hear(/^(?:Больница запрос)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	if (user.worker_hospital) {return message.send(`Вы уже работаете врачом !`)}
 	if (user.invitation_hospital) {return message.send(`Вы уже послали запрос !`)}
-	user.invitation_hospital = true;
-	console.log(user.invitation_hospital)
+	user.invitation_hospital = true
+	hospital_chat(`Игрок  @id${user.id}(${user.prefix}) захотел стать врачом. Что бы посмотреть заявки, используйте: больница запросы`)
 	return message.send(`Ваш запрос рассмотрит Глав.Врач`)
 })
 
