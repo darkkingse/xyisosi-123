@@ -4318,9 +4318,10 @@ vk.updates.hear(/^(?:вылечить)\s?([0-9]+)?/i, (message) => {
 	if (!user_id.sick) {return message.send(`Данный игрок не пациент больницы. `)}
 	if (user.worker_hospital == false) {return message.send(`Вы не владелец/работник больницы `)}
 	user_id.hp = 100;
-	user_id.balance -= organizations.hospital.money
+	user_id.balance -= Number(organizations.hospital.money)
 	user_id.sick = false
-	user.balance += organizations.hospital.money
+	//user.balance += organizations.hospital.money
+	organizations.hospital.money += Number(user.balance)
 	organizations.hospital.balance += organizations.hospital.money * 2
 	return message.send(`Вы вылечили игрока @id${user_id.id}(${user_id.prefix})👨‍⚕ \n 💰 Вы заработали ${organizations.hospital.money}$ 💵 за лечение пациента! \n 💰 Ваш Баланс: ${spaces(user.balance)}$ `)
 })
@@ -4379,7 +4380,7 @@ vk.updates.hear(/^(?:лечиться|💊 Лечиться)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	if (user.hp > 70) {return message.send(`Вы ещё в хорошем состоянии!`)}
 	user.sick = true;
-	hospital_chat(`Поступил новый пациент! @all \n Игрок: @id${user.id}(${user.prefix}). Что бы посмотреть пациентов , используйте: больеница пациенты`)
+	hospital_chat(`Поступил новый пациент! @all \n Игрок: @id${user.id}(${user.prefix}). Что бы посмотреть пациентов , используйте: больница пациенты`)
 	return message.send(`Вы встали в очередь, ожидайте врача !`)
 })
 
