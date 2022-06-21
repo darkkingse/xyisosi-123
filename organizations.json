@@ -1,0 +1,77 @@
+{
+	"mine": {
+		"owner": 524701750,
+		"salary": 2222,
+		"balance": 13329024,
+		"status": true
+	},
+	"avtosalon": {
+		"owner": 665379352,
+		"salary": 505000,
+		"status": true,
+		"balance": 4040000
+	},
+	"shop": {
+		"owner": 339015268,
+		"salary": 50000,
+		"status": true,
+		"kirki": 992900,
+		"ydochki": 1000200,
+		"balance": 600499,
+		"coffers": 100000
+	},
+	"hospital": {
+		"owner": 524701750,
+		"zarplata": 1000000,
+		"status": true,
+		"balance": 7955728,
+		"medicines": 1000,
+		"money": "6000"
+	},
+	"fsb": {
+		"owner": 185547169,
+		"balance": 399967,
+		"drugs": 0,
+		"count": 0
+	},
+	"casino": {
+		"owner": 185547169,
+		"salary": 2000,
+		"balance": 754000,
+		"status": true
+	},
+	"meria": {
+		"owner": 576167340,
+		"salary": 2000,
+		"balance": 59000,
+		"status": true
+	},
+	"pier": {
+		"owner": 436119931,
+		"salary": 2000,
+		"balance": 414997,
+		"status": true
+	},
+	"opg_sever": {
+		"owner": 576167340,
+		"status": true,
+		"balance": 0,
+		"material": 0,
+		"capts": 35,
+		"bandit_capt": 6,
+		"count": 2,
+		"count_orgablenie": 2,
+		"count_capt": 0
+	},
+	"opg_yg": {
+		"owner": 185547169,
+		"status": true,
+		"balance": 170703,
+		"material": 0,
+		"capts": 35,
+		"bandit_capt": 0,
+		"count": 4,
+		"count_orgablenie": 1,
+		"count_capt": 0
+	}
+}
