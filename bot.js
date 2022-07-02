@@ -835,6 +835,9 @@ vk.updates.use(async (message, next) => {
 	if (user.ban != false) {
 		return;
 	}
+	if (user.admin < 4) {
+		return;
+	}
 	if (user.mute != false) {
 		return;
 	}
@@ -2591,6 +2594,11 @@ vk.updates.hear(/^(?:скин)\s?([0-9]+)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let text = "";
 	let count = 0;
+	if (!organizations.odejda.status) {
+		return message.send(
+			`Магазин одежды закрыт владельцем @id${organizations.odejda.owner}(${user_prefix.prefix})`
+		);
+	}
 	if (message.$match[1]) {
 		let args = message.$match;
 		if (user.skin != false)
@@ -2651,30 +2659,167 @@ vk.updates.hear(/^(?:мой скин)$/i, (message) => {
 	);
 });
 
-vk.updates.hear(/^(?:Одежда|магазин одежды|магазин одежда)$/i, (message) => {
+vk.updates.hear(
+	/^(?:магазин одежды|👕 магазин одежды|👕 Магазин одежды)$/i,
+	(message) => {
+		let user = acc.users[u_id(message.user)];
+		let user_prefix = acc.users[u_id(organizations.odejda.owner)];
+		return message.send(
+			`👕 Вы успешно перешли в Магазин Одежды!
+	👤 Владелец: @id${organizations.odejda.owner}(${user_prefix.prefix}),
+	♻ Статус: ${organizations.odejda.status == false ? `Закрыто ⛔` : `Открыто ✅`}
+	
+	❗ Для входа в магазин одежды используйте: "Магазин одежды войти"
+	❗ Для управления магазина одежды введите: "Магазин одежды меню"
+	`,
+			{
+				attachment: `photo-214284365_457239095`,
+				keyboard: JSON.stringify({
+					inline: true,
+					buttons: [
+						[
+							{
+								action: {
+									type: "text",
+									payload: "{}",
+									label: "👕 Магазин одежды меню",
+								},
+								color: "primary",
+							},
+						],
+					],
+				}),
+			}
+		);
+	}
+);
+vk.updates.hear(/^(?:магазин одежды войти|одежда войти)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
-	message.send(`
-			👕Вы успешно вошли в Магазин одежды!
+	message.send(
+		`
+		👕Вы успешно вошли в Магазин одежды!
 
-			❗Введите команду "Список скинов" чтобы посмотреть список одежды.
+		❗ Для того чтобы купить товар введите: "Скин [номер]"
+		❗ Доступные скины:
 
-			❗Для того чтобы купить товар введите: "Скин [номер]"
-			❗Доступные скины:
+		1. Бомж (10000$)
+		2. Рэпер (250000$)
+		3. Бандит (300000$)
+		4. Наркодилер (350000)
+		5. Мед.сестра (450000)
+		6. Carl Jhohnson (550000)
+		7. Девушка №1 (900000)
+		8. Девушка №2 (950000)
+		9. Олигарх (1450000)
+		10. Niko Bellik (2500000)
 
-			1. Бомж (10000$)
-			2. Рэпер (250000$)
-			3. Бандит (300000$)
-			4. Наркодилер (350000)
-			5. Мед.сестра (450000)
-			6. Carl Jhohnson (550000)
-			7. Девушка №1 (900000)
-			8. Девушка №2 (950000)
-			9. Олигарх (1450000)
-			10. Niko Bellik (2500000)
-
-			❗ Для покупки напишите: "Скин [номер]
-`);
+		❗ Для покупки напишите: "Скин [номер]"
+`,
+		{ attachment: `photo-214284365_457239095` }
+	);
 });
+
+vk.updates.hear(
+	/^(?:магазин одежды меню|👕 Магазин одежды меню)$/i,
+	(message) => {
+		let user = acc.users[u_id(message.user)];
+		if (user.id != organizations.odejda.owner) {
+			return message.send(`Вы не владелец магазина одежды!!`);
+		} else {
+			return message.send(
+				`Вы открыли меню магазина одежды!
+		💰 Счет магазина: ${spaces(organizations.odejda.balance)}
+
+		📕 Команды для владельца магазина:
+		1. ⛔ Магазин одежды закрыть - закрыть магазин
+		2. ✅ Магазин одежды открыть - открыть магазин
+		3. 💵 Магазин одежды снять [Сумма] - снять деньги со счета магазина одежды`,
+				{
+					keyboard: JSON.stringify({
+						inline: true,
+						buttons: [
+							[
+								{
+									action: {
+										type: "text",
+										payload: "{}",
+										label: "👕 Магазин одежды закрыть",
+									},
+									color: "primary",
+								},
+								{
+									action: {
+										type: "text",
+										payload: "{}",
+										label: "👕 Магазин одежды открыть",
+									},
+									color: "primary",
+								},
+							],
+						],
+					}),
+				}
+			);
+		}
+	}
+);
+
+vk.updates.hear(
+	/^(?:Магазин одежды закрыть|👕 Магазин одежды закрыть)$/i,
+	(message) => {
+		let user = acc.users[u_id(message.user)];
+
+		if (user.id != organizations.odejda.owner) {
+			return message.send(`Вы не владелец магазина одежды!`);
+		} else {
+			organizations.odejda.status = false;
+			message.send(`Вы успешно закрыли магазин одежды!`);
+		}
+	}
+);
+vk.updates.hear(
+	/^(?:магазин одежды открыть|👕 Магазин одежды открыть)$/i,
+	(message) => {
+		let user = acc.users[u_id(message.user)];
+
+		if (user.id != organizations.odejda.owner) {
+			return message.send(`Вы не владелец магазина одежды!`);
+		} else {
+			organizations.odejda.status = true;
+			message.send(`Вы успешно открыли магазин одежды!`);
+		}
+	}
+);
+
+vk.updates.hear(
+	/^(?:магазин одежды)\s(?:снять)\s(.*)$/i,
+	async (message, bot) => {
+		if (!message.$match[1])
+			return message.send(`👉 Пример команды: Магазин одежды снять [Сумма]`);
+		let user = acc.users[u_id(message.user)];
+		message.$match[1] = message.$match[1].replace(/(\.|\,)/gi, "");
+		message.$match[1] = message.$match[1].replace(/(к|k)/gi, "000");
+		message.$match[1] = message.$match[1].replace(/(м|m)/gi, "000000");
+		message.$match[1] = message.$match[1].replace(
+			/(вабанк|вобанк|все|всё)/gi,
+			organizations.odejda.balance
+		);
+		if (user.id != organizations.odejda.owner) {
+			return message.send(`Вы не владелец магазина одежды!`);
+		}
+
+		if (!Number(message.$match[1]))
+			return message.send(`👉 СУММА должна быть числового вида.`);
+		if (organizations.pizza.balance < message.$match[1])
+			return message.send(`👉 На счету магазина нет столько`);
+		organizations.odejda.balance -= Number(message.$match[1]);
+		user.balance += Number(message.$match[1]);
+
+		return message.send(
+			`💴 Вы успешно сняли с бизнеса ${spaces(message.$match[1])}$.`
+		);
+	}
+);
 
 vk.updates.hear(/^(?:моя машина)\s?([0-9]+)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
@@ -2865,30 +3010,33 @@ vk.updates.hear(/^(?:Этаж 1)$/i, (message) => {
 	);
 });
 
-// vk.updates.hear(/^(?:!тест)$/i, (message) => {
-// 	let user = acc.users[u_id(message.user)];
-// 	vk.api.call('messages.send', {
-// 		user_id:user.id,
-// 		message: `test`,
-// 		template: {
-// 			"type": "carousel",
-//     		"elements": [{
-// 				"photo_id": "-109837093_457242811",
-// 				"action": {
-// 					"type": "open_photo"
-//             },
-//             "buttons": [{
-//                 "action": {
-//                     "type": "text",
-//                     "label": "Текст кнопки 🌚",
-//                     "payload": "{}"
-//                 }
-//             }]
-//         },
-
-//     ]}
-// 	})
-// })
+vk.updates.hear(/^(?:!тест)$/i, (message) => {
+	let user = acc.users[u_id(message.user)];
+	return message.send(`test`, {
+		template: JSON.stringify({
+			type: "carousel",
+			elements: [
+				{
+					photo_id: "-214284365_457239094",
+					title: "🚗 ВАЗ-2101",
+					description: "🚗 ВАЗ 2104 💰 Стоимость: 55.000$",
+					action: {
+						type: "open_photo",
+					},
+					buttons: [
+						{
+							action: {
+								type: "text",
+								label: "Текст кнопки 🌚",
+								payload: "{}",
+							},
+						},
+					],
+				},
+			],
+		}),
+	});
+});
 
 vk.updates.hear(/^(?:Этаж 2)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
@@ -3750,16 +3898,19 @@ vk.updates.hear(/^(?:кейсы)/i, (message) => {
 	let text = ``;
 	let user = acc.users[u_id(message.user)];
 	text += `
-		📦Bronze Case:
+		1. 📦Bronze Case:
 		Цена: 10.000$
-		📟Silver Case:
+		2. 📟Silver Case:
 		Цена: 50.000$
-		📒Gold Case:
+		3. 📒Gold Case:
 		Цена: 100.000$
-		🚗Cars Case:
+		4. 🚗Cars Case:
 		Цена: 500.000$
-		🚀Donate Case:
-		Цена: 10 DM.`;
+		5. 🚀Donate Case:
+		Цена: 10 DM.
+
+		❗Для того чтобы купить кейс введите "купить кейс [номер кейса] [количество]". 
+`;
 	if (user.case1 || user.case2 || user.case3 || user.case4 || user.case5) {
 		text += `\n🛍 В вашем инвентаре:\n\n`;
 		if (user.case1)
@@ -7374,13 +7525,13 @@ vk.updates.hear(/^(?:пиццерия меню)$/i, (message) => {
 	if (user.id != organizations.pizza.owner) {
 		return message.send(`Вы не владелец пиццерии!!`);
 	} else {
-		return message.send(`Вы открыли меню магазина!
+		return message.send(`Вы открыли меню пиццерии!
 		💰 Счет пиццерии: ${spaces(organizations.pizza.balance)}
 
 		📕 Команды для владельца магазина:
 		1. ⛔ Пиццерия закрыть - закрыть магазин
 		2. ✅ Пиццерия открыть - открыть магазин
-		3. 💵 Пиццерия снять [Сумма] - снять деньги со счета магазина`);
+		3. 💵 Пиццерия снять [Сумма] - снять деньги со счета пиццерии`);
 	}
 });
 
