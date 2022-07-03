@@ -2140,7 +2140,7 @@ vk.updates.hear(/^(?:продать)\s(?:камень)\s(.*)$/i, async (message,
 	user.balance += 250 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали камень за ${spaces(50 * message.$match[1])}$.`
+		`💴 Вы успешно продали камень за ${spaces(250 * message.$match[1])}$.`
 	);
 });
 
@@ -2164,7 +2164,7 @@ vk.updates.hear(/^(?:продать)\s(?:медь)\s(.*)$/i, async (message, bot
 	user.balance += 300 * message.$match[1];
 
 	return message.send(
-		`💴 Вы успешно продали медь за ${spaces(75 * message.$match[1])}$.`
+		`💴 Вы успешно продали медь за ${spaces(300 * message.$match[1])}$.`
 	);
 });
 
@@ -2188,7 +2188,7 @@ vk.updates.hear(/^(?:продать)\s(?:железо)\s(.*)$/i, async (message,
 	user.balance += 500 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали железо за ${spaces(95 * message.$match[1])}$.`
+		`💴 Вы успешно продали железо за ${spaces(500 * message.$match[1])}$.`
 	);
 });
 
@@ -2212,7 +2212,7 @@ vk.updates.hear(/^(?:продать)\s(?:металл)\s(.*)$/i, async (message,
 	user.balance += 600 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали металл за ${spaces(120 * message.$match[1])}$.`
+		`💴 Вы успешно продали металл за ${spaces(600 * message.$match[1])}$.`
 	);
 });
 
@@ -2236,7 +2236,7 @@ vk.updates.hear(/^(?:продать)\s(?:серебро)\s(.*)$/i, async (messag
 	user.balance += 1000 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали серебро за ${spaces(145 * message.$match[1])}$.`
+		`💴 Вы успешно продали серебро за ${spaces(1000 * message.$match[1])}$.`
 	);
 });
 
@@ -2260,7 +2260,7 @@ vk.updates.hear(/^(?:продать)\s(?:золото)\s(.*)$/i, async (message,
 	user.balance += 1250 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали золото за ${spaces(185 * message.$match[1])}$.`
+		`💴 Вы успешно продали золото за ${spaces(1250 * message.$match[1])}$.`
 	);
 });
 vk.updates.hear(/^(?:продать)\s(?:титан)\s(.*)$/i, async (message, bot) => {
@@ -2283,7 +2283,7 @@ vk.updates.hear(/^(?:продать)\s(?:титан)\s(.*)$/i, async (message, b
 	user.balance += 1350 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали титан за ${spaces(500 * message.$match[1])}$.`
+		`💴 Вы успешно продали титан за ${spaces(1350 * message.$match[1])}$.`
 	);
 });
 vk.updates.hear(/^(?:продать)\s(?:алмаз)\s(.*)$/i, async (message, bot) => {
@@ -2306,7 +2306,7 @@ vk.updates.hear(/^(?:продать)\s(?:алмаз)\s(.*)$/i, async (message, b
 	user.balance += 1500 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали алмазы за ${spaces(700 * message.$match[1])}$.`
+		`💴 Вы успешно продали алмазы за ${spaces(1500 * message.$match[1])}$.`
 	);
 });
 
@@ -6888,7 +6888,7 @@ vk.updates.hear(/^(?:Больница|👨‍⚕ Больница)$/i, (message)
 	let user_prefix = acc.users[u_id(organizations.hospital.owner)];
 	return message.send(
 		`
-		Вы перешли в здание Больницы 👨‍⚕ 🤡
+		Вы перешли в здание Больницы 👨‍⚕
 
 		👤 Главный Врач: @id${organizations.hospital.owner}(${user_prefix.prefix})
 		💊 Медикоменты: ${organizations.hospital.medicines}
@@ -8982,13 +8982,9 @@ function testStr(str)
     return true;
 }
 
-async function run() {
-	try {
-		await vk.updates.startPolling();
-	} catch (error) {
-		console.log(error);
-	}
-}
+async function run() {try {await vk.updates.startPolling();} catch (error) {console.log(error);}}
+
+
 run()
 	.then(() => {
 		console.log("[START]");
