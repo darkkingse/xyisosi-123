@@ -3776,9 +3776,9 @@ vk.updates.hear(/^(?:ставка|🎲 Ставка)\s?(.*)?/i, (message) => {
 		);
 	}
 	if (!Number(args[1]) || args[1] < 0)
-		return message.send(`🎰 Введите корректно ставку`);
+		return message.send(`‼ Введите корректно ставку`);
 	if (user.balance < args[1])
-		return message.send(`🎰 У вас недостаточно денег`);
+		return message.send(`‼ Ошибка, У вас недостаточно денег.`);
 	organizations.casino.balance += organizations.casino.salary;
 
 	let proigrish1 = 0.75;
@@ -4380,6 +4380,7 @@ vk.updates.hear(/^(?:кейс открыть 4|📦 Кейс открыть 4)/i
 	let user = acc.users[u_id(message.user)];
 
 	if (!user.case4) return message.send(`У вас нет Кейсов!`);
+	if (user.car) return message.send(`У вас уже есть машина.`)
 	user.case4 -= 1;
 
 	let car = utils.random(1, 10);
@@ -4590,6 +4591,8 @@ vk.updates.hear(/^(?:ahelp|апомощь|акоманды|ахелп|апм|а�
 			🏛makemeria [id] - выдать владельца бизнеса Пиццерия 
 			⛏setgiper [id] - выдать гипермашину игроку [NEW] 
 			⛏removegiper [id] - забрать гипермашину у игрока [NEW]
+			⛏setkirka [id] - забрать гипермашину у игрока [NEW]
+			⛏removekirka [id] - забрать гипермашину у игрока [NEW]
 			🗣repban [id] - Выдать игроку бан репорта[NEW]
 			🗣unrep [id] - Забрать бан репорта у игрока[NEW]
 	`);
@@ -5297,6 +5300,26 @@ vk.updates.hear(/^(?:юопгсет)\s?([0-9]+)?/i, (message) => {
 	organizations.opg_yg.owner = user_id.id;
 	user_id.opg_yg_bandit = true;
 	user_id.opg_yg_rang = 5;
+	return message.send(
+		`Вы выдали владельца игроку  @id${user_id.id}(${user_id.prefix})`
+	);
+});
+vk.updates.hear(/^(?:фсбсет)\s?([0-9]+)?/i, (message) => {
+	let user = acc.users[u_id(message.user)];
+	let args = message.$match;
+	let user_id = acc.users[args[1]];
+	if (!args[1]) {
+		return message.send(`✉ Укажите ID `);
+	}
+	if (user.admin < 5) {
+		return message.send(`❗Ошибка! У вас нет доступа к данной команде.`);
+	}
+	if (!acc.users[args[1]]) {
+		return message.send(`✉ Игрок не найден...`);
+	}
+	organizations.fsb.owner = user_id.id;
+	user_id.fsb_worker = true;
+	user_id.fsb_rang = 3;
 	return message.send(
 		`Вы выдали владельца игроку  @id${user_id.id}(${user_id.prefix})`
 	);
