@@ -641,7 +641,6 @@ vk.updates.use(async (message, next) => {
 		return;
 	}
 	if (message.user < 0) return;
-	if (message.user != 576167340) return;
 
 	if (!acc.users[u_id(message.user)]) {
 		acc.number += 1;
