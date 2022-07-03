@@ -1890,8 +1890,8 @@ vk.updates.hear(/^(?:копать руду 3)$/i, (message) => {
 	let copper = utils.random(16, 35);
 	let stone = utils.random(20, 38);
 	let hp = utils.random(3, 5);
-	let titan = utils.random(4, 7);
-	let diamond = utils.random(3, 5);
+	let titan = utils.random(5, 7);
+	let diamond = utils.random(4, 5);
 
 	if (user.kirka < 5) {
 		return message.send(`⛏ У вас нет Кирки!`);
@@ -1915,43 +1915,87 @@ vk.updates.hear(/^(?:копать руду 3)$/i, (message) => {
 	setTimeout(() => {
 		user.shahta = false;
 	}, 3000);
-	organizations.mine.balance += organizations.mine.salary;
-	user.balance += summa;
-	user.golod -= 5;
-	user.kirka -= 5;
-	user.opit += 2;
-	user.ryda += ryda;
-	user.gold += gold;
-	user.silver += silver;
-	user.metall += metall;
-	user.iron += iron;
-	user.copper += copper;
-	user.stone += stone;
-	user.titan += titan;
-	user.diamond += diamond;
-	user.hp -= hp;
+	if (user.super_kirka) {
+			organizations.mine.balance += organizations.mine.salary;
+		user.balance += summa;
+		user.golod -= 5;
+		user.kirka -= 5;
+		user.opit += 2;
+		user.ryda += ryda * 2;
+		user.gold += gold * 2;
+		user.silver += silver * 2;
+		user.metall += metall * 2;
+		user.iron += iron * 2;
+		user.copper += copper * 2;
+		user.stone += stone * 2;
+		user.titan += titan * 2;
+		user.diamond += diamond * 2;
+		user.hp -= hp;
 
-	return message.send(` 
-		⛏ Вы выкопали Фрагменты руды:
-🔸 Золото: ${gold}
-▫ Серебро: ${silver}
-◽ Металл: ${metall}
-⚪ Железо: ${iron}
-🔶 Медь: ${copper}
-⚫ Камень: ${stone}
-⬛ Титан: ${titan}
-💎 Алмаз: ${diamond}
-💠 Другая руда: ${ryda}
+		return message.send(` 
+			⛏ Вы выкопали Фрагменты руды:
+			🔸 Золото: ${gold * 2}
+			▫ Серебро: ${silver * 2}
+			◽ Металл: ${metall * 2}
+			⚪ Железо: ${iron * 2}
+			🔶 Медь: ${copper * 2}
+			⚫ Камень: ${stone * 2}
+			⬛ Титан: ${titan * 2}
+			💎 Алмаз: ${diamond * 2}
+			💠 Другая руда: ${ryda * 2}
 
-💰 Заработано:
-💵 Денег: ${summa}
-🔸 Опыт: +2
+			💰 Заработано:
+			💵 Денег: ${summa}
+			🔸 Опыт: +2
 
-❓ Показатели уменьшены: 
-⛏ Прочность кирки: ${user.kirka}%
-🍗 Голод: ${user.golod}%
-❤ Здоровье: ${user.hp}%
-	`);
+			❗ У вас используется Супер-Кирка, поэтому вся руда умножается на 2.
+
+
+			❓ Показатели уменьшены: 
+			⛏ Прочность кирки: ${user.kirka}%
+			🍗 Голод: ${user.golod}%
+			❤ Здоровье: ${user.hp}%
+				`);
+	}else{
+
+		organizations.mine.balance += organizations.mine.salary;
+		user.balance += summa;
+		user.golod -= 5;
+		user.kirka -= 5;
+		user.opit += 2;
+		user.ryda += ryda;
+		user.gold += gold;
+		user.silver += silver;
+		user.metall += metall;
+		user.iron += iron;
+		user.copper += copper;
+		user.stone += stone;
+		user.titan += titan;
+		user.diamond += diamond;
+		user.hp -= hp;
+
+		return message.send(` 
+			⛏ Вы выкопали Фрагменты руды:
+	🔸 Золото: ${gold}
+	▫ Серебро: ${silver}
+	◽ Металл: ${metall}
+	⚪ Железо: ${iron}
+	🔶 Медь: ${copper}
+	⚫ Камень: ${stone}
+	⬛ Титан: ${titan}
+	💎 Алмаз: ${diamond}
+	💠 Другая руда: ${ryda}
+
+	💰 Заработано:
+	💵 Денег: ${summa}
+	🔸 Опыт: +2
+
+	❓ Показатели уменьшены: 
+	⛏ Прочность кирки: ${user.kirka}%
+	🍗 Голод: ${user.golod}%
+	❤ Здоровье: ${user.hp}%
+		`);
+	}
 });
 
 vk.updates.hear(/^(?:гипермашина)$/i, (message) => {
@@ -2432,14 +2476,14 @@ vk.updates.hear(/^(?:рюкзак|сумка|🧳 Рюкзак)$/i, (message) =>
 vk.updates.hear(/^(?:рыбачить)$/i, (message) => {
 	let user_prefix = acc.users[u_id(organizations.pier.owner)];
 	let user = acc.users[u_id(message.user)];
-	let okyn = utils.random(2, 4);
-	let karas = utils.random(3, 6);
-	let shyka = utils.random(2, 4);
-	let som = utils.random(2, 4);
-	let kalmar = utils.random(2, 3);
-	let karp = utils.random(2, 5);
-	let treska = utils.random(2, 4);
-	let hp = utils.random(2, 5);
+	let okyn = utils.random(5, 8);
+	let karas = utils.random(5, 11);
+	let shyka = utils.random(12, 17);
+	let som = utils.random(8, 14);
+	let kalmar = utils.random(6, 13);
+	let karp = utils.random(5, 8);
+	let treska = utils.random(5, 9);
+	let hp = utils.random(3, 7);
 	if (!organizations.pier.status) {
 		return message.send(
 			`Пирс закрыт владельцем @id${organizations.pier.owner}(${user_prefix.prefix})`
@@ -7924,13 +7968,14 @@ vk.updates.hear(/^(?:пиццерия войти)\s?([0-9]+)?/i, (message) => {
 		}
 	} else {
 		return message.send(`🍕 Меню Пиццерии 🍕
-			1&#8419;. Пирожок +1 | 100$
-			2&#8419;. Картошка фри +5 | 200$
-			3&#8419;. Пицца +15 | 500$
-			4&#8419;. Гамбургер +50 | 700$
-			5&#8419;. Набор из фастфуда +100 | 1000$
+			🥖 Пирожок +1 | 150$
+			🍟 Картошка фри +5 | 300$
+			🍕Пицца +15 | 750$
+			🍔Гамбургер +50 | 350$
+			🍱Набор из фастфуда +100 | 5000$
 
 			🍮 Что бы покушать напишите: "Кушать [номер]"
+			‼Важно! Если вы пополните голод выше 100 процентов, вас может стошнить. 
 		`);
 	}
 });
