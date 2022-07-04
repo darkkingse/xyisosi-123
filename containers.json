@@ -1,0 +1,34 @@
+{
+	"russia": {
+		"cars": {
+			"count": 9
+		},
+		"resourse": {
+			"count": 10
+		}
+	},
+	"usa": {
+		"cars": {
+			"count": 10
+		},
+		"resourse": {
+			"count": 10
+		}
+	},
+	"germany": {
+		"cars": {
+			"count": 10
+		},
+		"resourse": {
+			"count": 10
+		}
+	},
+	"dubai": {
+		"cars": {
+			"count": 10
+		},
+		"resourse": {
+			"count": 10
+		}
+	}
+}
