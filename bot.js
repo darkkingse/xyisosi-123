@@ -338,7 +338,7 @@ const cars = {
 	},
 	21: {
 		name: "Lada Vesta Sport",
-		price: 3650000,
+		price: 1050000,
 		attachment: "photo-213827213_457239057",
 	},
 	22: {
@@ -348,7 +348,7 @@ const cars = {
 	},
 	23: {
 		name: "Lamborghini Sian",
-		price: 5250000,
+		price: 1250000,
 		attachment: "photo-214284365_457239168",
 	},
 	24: {
@@ -398,7 +398,7 @@ const cars = {
 	},
 	33: {
 		name: "Lamborghini Huracan" ,
-		price: 20350000,
+		price: 15350000,
 		attachment: "photo-214284365_457239182",
 	},
 	34: {
@@ -503,6 +503,12 @@ const houses = {
 		name: "Дом Максима Лесного",
 		price: 2500000000,
 		garage: 3,
+	},
+
+	9: {
+		name: "Небоскрёб Рамзана Кадырова",
+		price: 15500000000,
+		garage: 5,
 	},
 };
 
@@ -1282,13 +1288,11 @@ vk.updates.hear(/^(?:топ шахтеров)$/i, (message) => {
 /*----------------------------------------------------------------------------------------------------------*/
 vk.updates.hear(/^(?:банк|💳 Банк)$/i, async (message, bot) => {
 	let user = acc.users[u_id(message.user)];
-	if (user.bank < 1)
-		return message.send(`❗Ошибка, ваш банковский счёт пуст.\n
-❗Пополните счёт чтобы воспользоваться банком.`);
 	return message.send(
-		`вы вошли в банк⚠
-🔥 На балансе ${utils.sp(user.bank)}₽ игровой валюты
-💰 Введите "Банк пополнить [кол-во]" для пополнения`,
+		`🏦 Вы вошли в банк. 
+🔥 На балансе ${utils.sp(user.bank)}$ игровой валюты
+❗ Введите "Банк пополнить [кол-во]" для пополнения.
+❗ Введите "Банк снять [кол-во]" для снятия денежных средств.`,
 		{ attachment: `photo-206027701_457241905` }
 	);
 });
@@ -1692,7 +1696,8 @@ vk.updates.hear(/^(?:баланс|💰 Баланс)/i, (message) => {
 vk.updates.hear(/^(?:Шахта)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let user_prefix = acc.users[u_id(organizations.mine.owner)];
-
+			if (user.gps != 6) return message.send(`❗Ошибка! Для того чтобы копать руду, перейдите в шахту. 
+❗Для того чтобы перейти в шахту напишите "GPS 6". `)
 	return message.send(
 		`Вы перешли в шахту! 
 	👤 Владелец: @id${organizations.mine.owner}(${user_prefix.prefix}),
@@ -1722,6 +1727,8 @@ vk.updates.hear(/^(?:Шахта)$/i, (message) => {
 vk.updates.hear(/^(?:Шахта перейти 1)$/i, (message) => {
 	let user_prefix = acc.users[u_id(organizations.mine.owner)];
 	let user = acc.users[u_id(message.user)];
+				if (user.gps != 6) return message.send(`❗Ошибка! Для того чтобы копать руду, перейдите в шахту. 
+❗Для того чтобы перейти в шахту напишите "GPS 6". `)
 	if (!organizations.mine.status) {
 		return message.send(
 			`Шахта закрыта владельцем @id${organizations.mine.owner}(${user_prefix.prefix})`
@@ -1737,7 +1744,8 @@ vk.updates.hear(/^(?:Шахта перейти 1)$/i, (message) => {
 vk.updates.hear(/^(?:Шахта перейти 2)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let user_prefix = acc.users[u_id(organizations.mine.owner)];
-
+	if (user.gps != 6) return message.send(`❗Ошибка! Для того чтобы копать руду, перейдите в шахту. 
+❗Для того чтобы перейти в шахту напишите "GPS 6". `)
 	if (!organizations.mine.status) {
 		return message.send(
 			`Шахта закрыта владельцем @id${organizations.mine.owner}(${user_prefix.prefix})`
@@ -1752,6 +1760,8 @@ vk.updates.hear(/^(?:Шахта перейти 2)$/i, (message) => {
 
 vk.updates.hear(/^(?:Шахта перейти 3)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
+				if (user.gps != 6) return message.send(`❗Ошибка! Для того чтобы копать руду, перейдите в шахту. 
+❗Для того чтобы перейти в шахту напишите "GPS 6". `)
 	let user_prefix = acc.users[u_id(organizations.mine.owner)];
 
 	if (!organizations.mine.status) {
@@ -1769,7 +1779,8 @@ vk.updates.hear(/^(?:Шахта перейти 3)$/i, (message) => {
 vk.updates.hear(/^(?:копать руду 1)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let user_prefix = acc.users[u_id(organizations.mine.owner)];
-
+	if (user.gps != 6) return message.send(`❗Ошибка! Для того чтобы копать руду, перейдите в шахту. 
+❗Для того чтобы перейти в шахту напишите "GPS 6". `)
 	if (!organizations.mine.status) {
 		return message.send(
 			`Шахта закрыта владельцем @id${organizations.mine.owner}(${user_prefix.prefix})`
@@ -1875,7 +1886,8 @@ vk.updates.hear(/^(?:копать руду 1)$/i, (message) => {
 vk.updates.hear(/^(?:копать руду 2)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let user_prefix = acc.users[u_id(organizations.mine.owner)];
-
+		if (user.gps != 6) return message.send(`❗Ошибка! Для того чтобы копать руду, перейдите в шахту. 
+❗Для того чтобы перейти в шахту напишите "GPS 6". `)
 	if (!organizations.mine.status) {
 		return message.send(
 			`Шахта закрыта владельцем @id${organizations.mine.owner}(${user_prefix.prefix})`
@@ -1990,6 +2002,8 @@ vk.updates.hear(/^(?:копать руду 2)$/i, (message) => {
 });
 vk.updates.hear(/^(?:копать руду 3)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
+		if (user.gps != 6) return message.send(`❗Ошибка! Для того чтобы копать руду, перейдите в шахту. 
+❗Для того чтобы перейти в шахту напишите "GPS 6". `)
 	let user_prefix = acc.users[u_id(organizations.mine.owner)];
 
 	if (!organizations.mine.status) {
@@ -2474,7 +2488,8 @@ vk.updates.hear(/^(?:продать)\s(?:алмаз)\s(.*)$/i, async (message, b
 
 vk.updates.hear(/^(?:пирс)$/i, (message) => {
 	let user_prefix = acc.users[u_id(organizations.pier.owner)];
-
+		if (user.gps != 5) return message.send(`❗Ошибка! Для того чтобы рыбачить, перейдите в пирс. 
+❗Для того чтобы перейти в автосалон напишите "GPS 5". `)
 	message.send(`Вы перешли на пирс! 
 	👤 Владелец: @id${organizations.pier.owner}(${user_prefix.prefix})
 	➖➖➖➖➖➖➖➖➖➖
@@ -2604,6 +2619,8 @@ vk.updates.hear(/^(?:рыбачить)$/i, (message) => {
 	let karp = utils.random(5, 8);
 	let treska = utils.random(5, 9);
 	let hp = utils.random(3, 7);
+			if (user.gps != 5) return message.send(`❗Ошибка! Для того чтобы рыбачить, перейдите в пирс. 
+❗Для того чтобы перейти в автосалон напишите "GPS 5". `)
 	if (!organizations.pier.status) {
 		return message.send(
 			`Пирс закрыт владельцем @id${organizations.pier.owner}(${user_prefix.prefix})`
@@ -2952,7 +2969,7 @@ vk.updates.hear(/^(?:дом)\s?([0-9]+)?/i, (message) => {
 		}
 	}
 });
-/*
+
 vk.updates.hear(/^(?:магазин оружия|оружейка|оружие|оружия)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	if (user.gps != 4)
@@ -2960,22 +2977,21 @@ vk.updates.hear(/^(?:магазин оружия|оружейка|оружие|�
 			`✉ Для использования команды переместитесь в автосалон ('gps')`
 		);
 	message.send(`Вы успешно Перешли в оружейный магазин! Список Оружия:
-🆔 - 1 » Кастет [10.$]
-🆔 - 2 » Purple Dildo [50.000$]
-🆔 - 3 » Бензопила [120.000$]
-🆔 - 4 » Silend Pistol [200.000$]
-🆔 - 5 » Colt [250.000$]
-🆔 - 6 » Micro UZI [330.000$]
-🆔 - 7 » Desert Eagle [510.000$]
-🆔 - 8 » MP5 [640.000$]
-🆔 - 9 » M4 [810.000$]
-🆔 - 10 » AK-47 [1.000.000$]
-🆔 - 11 » Sniper Rifle [2.400.000$]
-➖➖➖➖➖➖
-🛒 Для покупки, используйте: Оружие [номер] 🔫
+		🆔 - 1 » Кастет [10.$]
+		🆔 - 2 » Purple Dildo [50.000$]
+		🆔 - 3 » Бензопила [120.000$]
+		🆔 - 4 » Silend Pistol [200.000$]
+		🆔 - 5 » Colt [250.000$]
+		🆔 - 6 » Micro UZI [330.000$]
+		🆔 - 7 » Desert Eagle [510.000$]
+		🆔 - 8 » MP5 [640.000$]
+		🆔 - 9 » M4 [810.000$]
+		🆔 - 10 » AK-47 [1.000.000$]
+		🆔 - 11 » Sniper Rifle [2.400.000$]
+		➖➖➖➖➖➖
+		🛒 Для покупки, используйте: Оружие [номер] 🔫
 	`);
 });
-*/
 /*Alex_Oddone, Вы перешли в чёрный рынок! 🔫 🙈
 
 🆔 - 1 » Кастет [10.000$]
@@ -2997,7 +3013,9 @@ vk.updates.hear(/^(?:скин)\s?([0-9]+)?/i, (message) => {
 	let text = "";
 	let count = 0;
 	let user_prefix = acc.users[u_id(organizations.odejda.owner)];
-
+	
+	if (user.gps != 2) return message.send(`❗Ошибка! Для того чтобы купить одежду перейдите в магазин одежды.
+❗Для того чтобы перейти в магазин напишите "GPS 2". `)
 	if (!organizations.odejda.status) {
 		return message.send(
 			`Магазин одежды закрыт владельцем @id${organizations.odejda.owner}(${user_prefix.prefix})`
@@ -3436,7 +3454,9 @@ vk.updates.hear(/^(?:автосалон)\s(?:снять)\s(.*)$/i, async (messag
 vk.updates.hear(/^(?:Автосалон)$/i, (message) => {
 	let user_prefix = acc.users[u_id(organizations.avtosalon.owner)];
 	let user = acc.users[u_id(message.user)];
-
+		
+	if (user.gps != 4) return message.send(`❗Ошибка! Для того чтобы купить машину перейдите в автосалон.
+❗Для того чтобы перейти в автосалон напишите "GPS 4". `)
 	message.send(
 		`Вы успешно Перешли в Автосалон!
 	👤 Владелец: @id${organizations.casino.owner}(${user_prefix.prefix}),
@@ -3456,6 +3476,8 @@ vk.updates.hear(/^(?:Автосалон)$/i, (message) => {
 vk.updates.hear(/^(?:Этаж 1)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let user_prefix = acc.users[u_id(organizations.avtosalon.owner)];
+		if (user.gps != 4) return message.send(`❗Ошибка! Для того чтобы купить машину перейдите в автосалон.
+❗Для того чтобы перейти в автосалон напишите "GPS 4". `)
 	if (!organizations.avtosalon.status) {
 		return message.send(
 			`Автосалон закрыт владельцем @id${organizations.avtosalon.owner}(${user_prefix.prefix})`
@@ -3536,7 +3558,10 @@ vk.updates.hear(/^(?:!тест)$/i, (message) => {
 });
 
 vk.updates.hear(/^(?:Этаж 2)$/i, (message) => {
+	
 	let user = acc.users[u_id(message.user)];
+		if (user.gps != 4) return message.send(`❗Ошибка! Для того чтобы купить машину перейдите в автосалон.
+❗Для того чтобы перейти в автосалон напишите "GPS 4". `)
 	let user_prefix = acc.users[u_id(organizations.avtosalon.owner)];
 	if (!organizations.avtosalon.status) {
 		return message.send(
@@ -3596,6 +3621,8 @@ vk.updates.hear(/^(?:Этаж 2)$/i, (message) => {
 
 vk.updates.hear(/^(?:Этаж 3)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
+		if (user.gps != 4) return message.send(`❗Ошибка! Для того чтобы купить машину перейдите в автосалон.
+❗Для того чтобы перейти в автосалон напишите "GPS 4". `)
 	let user_prefix = acc.users[u_id(organizations.avtosalon.owner)];
 	if (!organizations.avtosalon.status) {
 		return message.send(
@@ -3924,6 +3951,8 @@ vk.updates.hear(/^(?:банк снять)\s?(.*)?/i, (message) => {
 });
 vk.updates.hear(/^(?:казино)$/i, (message) => {
 	let user_prefix = acc.users[u_id(organizations.casino.owner)];
+				if (user.gps != 10) return message.send(` 
+❗Для того чтобы перейти в казино, напишите "GPS 10". `)
 	return message.send(`
 		👤 Владелец: @id${organizations.casino.owner}(${user_prefix.prefix})
 		♻ Статус: ${organizations.casino.status == false ? `Закрыто⛔` : `Открыто✅`}
@@ -3932,6 +3961,8 @@ vk.updates.hear(/^(?:казино)$/i, (message) => {
 	`);
 });
 vk.updates.hear(/^(?:казино войти|войти в казино)$/i, (message) => {
+					if (user.gps != 10) return message.send(` 
+❗Для того чтобы войти в казино, напишите "GPS 10". `)
 	let user_prefix = acc.users[u_id(organizations.casino.owner)];
 	if (!organizations.casino.status) {
 		return message.send(
@@ -4013,9 +4044,12 @@ vk.updates.hear(/^(?:казино открыть)$/i, (message) => {
 });
 
 vk.updates.hear(/^(?:ставка|🎲 Ставка)\s?(.*)?/i, (message) => {
-	if (!message.$match[1]) return message.send(`💰 Введите корректно ставку`);
-	let args = message.$match;
 	let user = acc.users[u_id(message.user)];
+					if (user.gps != 10) return message.send(` 
+❗Для того чтобы поиграть в казино, напишите "GPS 10". `)
+	if (!message.$match[1]) return message.send(`💰 Введите корректно ставку`);
+	
+	let args = message.$match;
 	let user_prefix = acc.users[u_id(organizations.casino.owner)];
 	args[1] = args[1].replace(/(\.|\,)/gi, "");
 	args[1] = args[1].replace(/(к|k)/gi, "000");
@@ -4429,6 +4463,8 @@ vk.updates.hear(/^(?:репорт)\s?([^]+)?/i, (message) => {
 
 vk.updates.hear(/^(?:порт)/i, (message) => {
 	let user = acc.users[u_id(message.user)]
+						if (user.gps != 12) return message.send(` 
+❗Для того чтобы перейти в порт, напишите "GPS 12". `)
 	return message.send(`
 		‼Вы успешно перешли в локацию "Порт".
 
@@ -4463,7 +4499,7 @@ vk.updates.hear(/^(?:коткрыть 1)/i, (message) => {
 	if (containers.russia.cars.count <= 0) return message.send(`‼ Ошибка, на данный момент в порту нету контейнеров, ожидайте следущую поставку в течении часа.`)
 	if (user.balance < 1500000) return message.send(`‼ У вас недостаточно денег на игровом счету.`)
 	containers.russia.cars.count -= 1;
-	let car = utils.random(21,26)
+	let car = utils.random(21,25)
 	user.car_container = car;
 	return message.send(
 		`Вы открыли контейнер и там была ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(cars[car].price)}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
@@ -4541,7 +4577,7 @@ vk.updates.hear(/^(?:коткрыть 3)/i, (message) => {
 	let car = utils.random(29,35)
 	user.car_container = car;
 	return message.send(
-		`!!Вы открыли контейнер и там была ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(cars[car].price)}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
+		`Вы открыли контейнер и там была ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(cars[car].price)}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
 		{attachment:cars[car].attachment,
 			keyboard: JSON.stringify({
 				inline: true,
@@ -4593,7 +4629,7 @@ vk.updates.hear(/^(?:кейсы|📦 Кейсы)/i, (message) => {
 		3. 📒Gold Case:
 		Цена: 100.000$
 		4. 🚗Cars Case:
-		Цена: 500.000$
+		Цена: 1.000.000$
 		5. 🚀Donate Case:
 		Цена: 10 DM.
 
@@ -4789,7 +4825,7 @@ vk.updates.hear(/^(?:кейс открыть 4|📦 Кейс открыть 4)/i
 	if (user.car && user.car2 && user.car3) return message.send(`❗ У вас уже есть машина.`)
 	user.case4 -= 1;
 
-	let car = utils.random(1, 20);
+	let car = utils.random(1, 12);
 
 	user.car_case = car;
 	return message.send(
@@ -4832,6 +4868,59 @@ vk.updates.hear(/^(?:кейс открыть 4|📦 Кейс открыть 4)/i
 	);
 });
 
+vk.updates.hear(/^(?:кейс открыть 5|📦 Кейс открыть 5)/i, (message) => {
+	let user = acc.users[u_id(message.user)];
+
+	if (!user.case3) return message.send(`У вас нет Кейсов!`);
+	user.case3 -= 1;
+
+	let prize2 = utils.pick([1, 2]);
+	let op = utils.random(15, 26);
+	let bablo = utils.random(5500000, 1150000);
+
+	if (prize2 === 1) {
+		user.balance += bablo;
+		return message.send(`Вы выиграли ${utils.sp(bablo)}$ 🔥`, {
+			keyboard: JSON.stringify({
+				inline: true,
+				buttons: [
+					[
+						{
+							action: {
+								type: "text",
+								payload: "{}",
+								label: `📦 Кейс открыть 5`,
+							},
+							color: "primary",
+						},
+					],
+				],
+			}),
+		});
+	}
+
+	if (prize2 === 2) {
+		user.exs += op;
+		return message.send(`Вы выиграли ${utils.sp(op)} опыта 🔥`, {
+			keyboard: JSON.stringify({
+				inline: true,
+				buttons: [
+					[
+						{
+							action: {
+								type: "text",
+								payload: "{}",
+								label: `📦 Кейс открыть 5`,
+							},
+							color: "primary",
+						},
+					],
+				],
+			}),
+		});
+	}
+});
+
 vk.updates.hear(/^(?:авто продать|🚫 Авто продать)/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	if (!user.car_case && !user.car_container) return message.send(`❗ Вам не выпадала машина с кейса/контейнера`)
@@ -4871,13 +4960,13 @@ vk.updates.hear(/^(?:бонус|💶 Бонус)/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	if (user.bonus == true)
 		return message.send(
-			`❗ Ошибка, Бонус можно получить только раз в 30 минут.`
+			`❗ Ошибка, Бонус можно получить только раз в 24 часа.`
 		);
 	user.bonus = true;
 	setTimeout(() => {
 		user.bonus = false;
-	}, 1800000);
-	let sum = rand(10000, 60000);
+	}, 86400000);
+	let sum = rand(100000, 250000);
 	user.balance += Number(sum);
 	return message.send(`🎁Поздравляем! Вы получили бонус в размере  ${spaces(
 		sum
@@ -4964,7 +5053,7 @@ vk.updates.hear(/^(?:купить кейс)\s?([0-9]+)?\s?(.*)?/i, (message) => 
 		message.$match[2] = message.$match[2].replace(/(\.|\,)/gi, "");
 		message.$match[2] = message.$match[2].replace(/(к|k)/gi, "000");
 		message.$match[2] = message.$match[2].replace(/(м|m)/gi, "000000");
-		let case4_money = 500000 * Number(message.$match[2]);
+		let case4_money = 1000000 * Number(message.$match[2]);
 		if (user.balance < case4_money) {
 			return message.send(`❗ У вас недостаточно денег на счету.`);
 		}
@@ -4972,6 +5061,23 @@ vk.updates.hear(/^(?:купить кейс)\s?([0-9]+)?\s?(.*)?/i, (message) => 
 		user.case4 += Number(message.$match[2]);
 		return message.send(
 			`❗Вы успешно купили кейс ${message.$match[2]} Cars Кейса за ${spaces(
+				case4_money
+			)}\n\nДля использования введите команду "Кейс открыть [номер кейса]"
+❗Пример: Кейс открыть 1`
+		);
+	}
+	if (message.$match[1] == 5) {
+		message.$match[2] = message.$match[2].replace(/(\.|\,)/gi, "");
+		message.$match[2] = message.$match[2].replace(/(к|k)/gi, "000");
+		message.$match[2] = message.$match[2].replace(/(м|m)/gi, "000000");
+		let case4_money = 5 * Number(message.$match[2]);
+		if (user.donate < case4_money) {
+			return message.send(`❗ У вас недостаточно DM на счету.`);
+		}
+		user.donate -= case4_money;
+		user.case4 += Number(message.$match[2]);
+		return message.send(
+			`❗Вы успешно купили кейс ${message.$match[2]} DonateCase за ${spaces(
 				case4_money
 			)}\n\nДля использования введите команду "Кейс открыть [номер кейса]"
 ❗Пример: Кейс открыть 1`
@@ -6276,37 +6382,46 @@ vk.updates.hear(/^(?:gps|🏣 GPS)\s?([0-9]+)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let name = [
 		0,
-		"город Южный",
-		"Мерию",
-		"Пиццерию",
-		"Автосалон",
+		"Магазин",
 		"Магазин одежды",
-		"Автошколу",
 		"Оружейный магазин",
-		"Шахту",
+		"Автосалон",
 		"Пирс",
+		"Шахта",
+		"Мэрия",
+		"Больница",
+		"Банк",
+		"Казино",
+		"Пиццерия",
+		"Порт",
 	];
-	return message.send(`
-	❗Вы перешли в GPS-навигатор.
-	➖➖➖➖➖➖
-	🏪 Магазин
-	👕 Магазин одежды
-	🔫 Оружейный магазин [В разработке!]
-	🚗 Автосалон
-	➖➖➖➖➖➖
-	🏖 Пирс
-	🎑 Шахта
-	➖➖➖➖➖➖
-	🏛 Мэрия
-	👨‍⚕ Больница
-	🏦 Банк
-	🎰 Казино
-	🍔 Пиццерия
+	if (message.$match[1]) {
+		let i = message.$match[1];
+		if (i < 0 || i > 13) return message.send(`✉ Неверно указан номер`);
 
-	❗Важно!
-	Для перемещения, введите: название локации.
-	Напимер: Шахта 
-	`);
+		user.gps = Number(i);
+		return message.send(`✉ Вы успешно переместились в ${name[i]}`);
+	} else {
+		return message.send(`
+❗Вы перешли в GPS-навигатор.
+➖➖➖➖➖➖
+1⃣ Магазин
+2⃣ Магазин одежды
+3⃣ Оружейный магазин [В разработке!]
+4⃣ Автосалон
+➖➖➖➖➖➖
+5⃣ Пирс
+6⃣ Шахта
+➖➖➖➖➖➖
+7⃣ Мэрия
+8⃣ Больница
+9⃣ Банк
+1⃣0⃣ Казино
+1⃣1⃣ Пиццерия
+1⃣2⃣ Порт
+
+		`);
+	}
 });
 
 vk.updates.hear(/^(?:лидеры)$/i, (message) => {
@@ -7401,6 +7516,8 @@ vk.updates.hear(/^(?:взять 1)\s?([0-9]+)?/i, (message) => {
 ///////////////////////////////////////////////////////////////////////
 vk.updates.hear(/^(?:Больница|👨‍⚕ Больница)$/i, (message) => {
 	let user_prefix = acc.users[u_id(organizations.hospital.owner)];
+			if (user.gps != 8) return message.send(` 
+❗Для того чтобы перейти в больницу напишите "GPS 8". `)
 	return message.send(
 		`
 		Вы перешли в здание Больницы 👨‍⚕
@@ -7877,6 +7994,8 @@ vk.updates.hear(/^(?:Больница запрос)$/i, (message) => {
 });
 
 vk.updates.hear(/^(?:лечиться|💊 Лечиться)$/i, (message) => {
+				if (user.gps != 8) return message.send(` 
+❗Для того чтобы лечиться, перейдите в больницу, команда: "GPS 8". `)
 	let user = acc.users[u_id(message.user)];
 	if (user.hp > 70) {
 		return message.send(`Вы ещё в хорошем состоянии!`);
@@ -7916,7 +8035,8 @@ vk.updates.hear(/^(?:пожертвование)$/i, (message) => {
 
 vk.updates.hear(/^(?:кушать)\s?([0-9]+)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
-
+						if (user.gps != 11) return message.send(` 
+❗Для того чтобы покушать, перейдите в Пиццерию,для перехода напишите "GPS 11". `)
 	if (message.$match[1]) {
 		let args = message.$match;
 		let a = [0, 10, 15, 25, 50, 100];
@@ -8101,6 +8221,8 @@ vk.updates.hear(/^(?:купить коин)\s?([0-9]+)?\s?(.*)?/i, (message) => 
 vk.updates.hear(/^(?:магазин)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let user_prefix = acc.users[u_id(organizations.shop.owner)];
+	if (user.gps != 1) return message.send(`❗Ошибка! Для того чтобы купить товар перейдите в магазин.
+❗Для того чтобы перейти в магазин напишите "GPS 1". `)
 	return message.send(
 		`🏪 Вы успешно перешли в Магазин "24/7"!
 	👤 Владелец: @id${organizations.shop.owner}(${user_prefix.prefix}),
@@ -8115,6 +8237,8 @@ vk.updates.hear(/^(?:магазин)$/i, (message) => {
 
 vk.updates.hear(/^(?:магазин войти)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
+		if (user.gps != 1) return message.send(`❗Ошибка! Для того чтобы купить товар перейдите в магазин.
+❗Для того чтобы перейти в магазин напишите "GPS 1". `)
 	let user_prefix = acc.users[u_id(organizations.shop.owner)];
 	if (!organizations.shop.status) {
 		return message.send(
@@ -8135,6 +8259,8 @@ vk.updates.hear(/^(?:магазин войти)$/i, (message) => {
 
 vk.updates.hear(/^(?:купить)\s?([0-9]+)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
+	if (user.gps != 1) return message.send(`❗Ошибка! Для того чтобы купить товар перейдите в магазин.
+❗Для того чтобы перейти в магазин напишите "GPS". `)
 	let user_prefix = acc.users[u_id(organizations.shop.owner)];
 
 	if (message.$match[1]) {
@@ -8392,6 +8518,8 @@ vk.updates.hear(/^(?:пиццерия)\s(?:снять)\s(.*)$/i, async (message,
 vk.updates.hear(/^(?:пиццерия)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let user_prefix = acc.users[u_id(organizations.pizza.owner)];
+					if (user.gps != 11) return message.send(` 
+❗Для того чтобы перейти в пиццерию, напишите "GPS 11". `)
 	return message.send(
 		`🍕 Вы успешно перешли в Пиццерию!
 	👤 Владелец: @id${organizations.pizza.owner}(${user_prefix.prefix}),
@@ -8406,7 +8534,8 @@ vk.updates.hear(/^(?:пиццерия)$/i, (message) => {
 
 vk.updates.hear(/^(?:пиццерия войти)\s?([0-9]+)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
-
+						if (user.gps != 11) return message.send(` 
+❗Для того чтобы войти в пиццерию, напишите "GPS 11". `)
 	if (message.$match[1]) {
 		let args = message.$match;
 		let a = [0, 1, 5, 15, 50, 100];
@@ -8460,7 +8589,8 @@ vk.updates.hear(/^(?:пиццерия войти)\s?([0-9]+)?/i, (message) => {
 vk.updates.hear(/^(?:мерия|мэрия)$/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let user_prefix_meria = acc.users[u_id(organizations.meria.owner)];
-	
+		if (user.gps != 7) return message.send(` 
+❗Для того чтобы перейти в мэрию напишите "GPS 7". `)
 	return message.send(` Вы перешли в Мэрию 🏛 
 		🤴 Лидер - @id${organizations.meria.owner}(${user_prefix_meria.prefix})
 		💰 Казна: ${spaces(organizations.meria.balance)}$
@@ -8524,6 +8654,8 @@ vk.updates.hear(/^(?:мерия|мэрия)$/i, (message) => {
 
 vk.updates.hear(/^(?:выбрать 1)\s?([0-1]+)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
+	if (user.gps != 7) return message.send(` 
+❗Для того чтобы перейти в мэрию напишите "GPS 7". `)
 	if (user.pass) return message.send(`‼ У вас уже есть паспорт.`)
 	return message.send(`‼Важно! Чтобы получить паспорт введите дату вашего рождения. Командой "пдата".\n
 	Пример: Пдата 18.08.2000"`);
@@ -8565,7 +8697,8 @@ vk.updates.hear(/^(?:выбрать 3)\s?([0-1]+)?/i, (message) => {
 	let user_prefix_odejda = acc.users[u_id(organizations.odejda.owner)];
 	let user_prefix_pizza = acc.users[u_id(organizations.pizza.owner)];
 	let user_prefix_avto = acc.users[u_id(organizations.avtosalon.owner)];
-
+			if (user.gps != 7) return message.send(` 
+❗Для того чтобы узнать владельцев бизнесов перейдите в мэрию, напишите "GPS 7". `)
 	// @id${organizations.hospital.owner}(${user_prefix_mine.prefix})
 	return message.send(`❗ Вы перешли во вкладку "Владельцы Lux-Bussines".
 		Владельцы:
