@@ -1,7 +1,3 @@
-/*----------------------------------------------------------------------------------------------------------*/
-/*========================================DEVELOPER Удачной игры=============================================*/
-/*===========================================MTA RP===============================================*/
-/*----------------------------------------------------------------------------------------------------------*/
 const rq = require("prequest");
 
 const fs = require("fs");
@@ -836,6 +832,9 @@ vk.updates.use(async (message, next) => {
 				mask2: false //Маска от коронавируса
 			}
 			*/
+			bonus_time: false,
+			container_time: false,
+			container_gift: false,
 			super_kirka: false,
 			super_ydochka: false,
 			case1: 0,
@@ -2223,11 +2222,11 @@ vk.updates.hear(/^(?:шахта снять)\s?([0-9]+)?/i, (message) => {
 		return message.send(`Вы не владелец шахты!`);
 	}
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Шахта снять [Сумма]`);
+		return message.send(`❗ Пример команды: Шахта снять [Сумма]`);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (organizations.mine.balance < message.$match[1])
-		return message.send(`👉 На счету шахты нет столько`);
+		return message.send(`❗ На счету шахты нет столько`);
 	organizations.mine.balance -= Number(message.$match[1]);
 	user.balance += Number(message.$match[1]);
 
@@ -2305,16 +2304,16 @@ vk.updates.hear(/^(?:продать)\s(?:камень)\s(.*)$/i, async (message,
 	args[1] = args[1].replace(/(м|m)/gi, "000000");
 	args[1] = args[1].replace(/(вабанк|вобанк|все|всё)/gi, user.stone);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать камень[кол-во] `);
+		return message.send(`❗ Пример команды: Продать камень[кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.stone < message.$match[1])
 		return message.send(` У вас нет столько камня!`);
 	user.stone -= args[1]; //50 * Number(message.$match[1]);
 	user.balance += 250 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали камень за ${spaces(250 * message.$match[1])}$.`
+		`💴 Вы успешно продали камень за ${spaces(Math.floor(250 * message.$match[1]))}$.`
 	);
 });
 
@@ -2329,16 +2328,16 @@ vk.updates.hear(/^(?:продать)\s(?:медь)\s(.*)$/i, async (message, bot
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать медь[кол-во] `);
+		return message.send(`❗ Пример команды: Продать медь[кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.copper < message.$match[1])
 		return message.send(` У вас нет столько меди!`);
 	user.copper -= message.$match[1];
 	user.balance += 300 * message.$match[1];
 
 	return message.send(
-		`💴 Вы успешно продали медь за ${spaces(300 * message.$match[1])}$.`
+		`💴 Вы успешно продали медь за ${spaces(Math.floor(300 * message.$match[1]))}$.`
 	);
 });
 
@@ -2353,16 +2352,16 @@ vk.updates.hear(/^(?:продать)\s(?:железо)\s(.*)$/i, async (message,
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать железо[кол-во] `);
+		return message.send(`❗ Пример команды: Продать железо[кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.iron < message.$match[1])
 		return message.send(` У вас нет столько железа!`);
 	user.iron -= message.$match[1]; //50 * Number(message.$match[1]);
 	user.balance += 500 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали железо за ${spaces(500 * message.$match[1])}$.`
+		`💴 Вы успешно продали железо за ${spaces(Math.floor(500 * message.$match[1]))}$.`
 	);
 });
 
@@ -2377,16 +2376,16 @@ vk.updates.hear(/^(?:продать)\s(?:металл)\s(.*)$/i, async (message,
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать металл [кол-во] `);
+		return message.send(`❗ Пример команды: Продать металл [кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.metall < message.$match[1])
 		return message.send(` У вас нет столько металла!`);
 	user.metall -= message.$match[1]; //50 * Number(message.$match[1]);
 	user.balance += 600 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали металл за ${spaces(600 * message.$match[1])}$.`
+		`💴 Вы успешно продали металл за ${spaces(Math.floor(600 * message.$match[1]))}$.`
 	);
 });
 
@@ -2401,16 +2400,16 @@ vk.updates.hear(/^(?:продать)\s(?:серебро)\s(.*)$/i, async (messag
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать серебро[кол-во] `);
+		return message.send(`❗ Пример команды: Продать серебро[кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.silver < message.$match[1])
 		return message.send(` У вас нет столько Серебра!`);
 	user.silver -= message.$match[1]; //50 * Number(message.$match[1]);
 	user.balance += 1000 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали серебро за ${spaces(1000 * message.$match[1])}$.`
+		`💴 Вы успешно продали серебро за ${spaces(Math.floor(1000 * message.$match[1]))}$.`
 	);
 });
 
@@ -2425,16 +2424,16 @@ vk.updates.hear(/^(?:продать)\s(?:золото)\s(.*)$/i, async (message,
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать золото[кол-во] `);
+		return message.send(`❗ Пример команды: Продать золото[кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 Руда должна быть числового вида.`);
+		return message.send(`❗ Руда должна быть числового вида.`);
 	if (user.gold < message.$match[1])
 		return message.send(` У вас нет столько золота!`);
 	user.gold -= message.$match[1]; //50 * Number(message.$match[1]);
 	user.balance += 1250 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали золото за ${spaces(1250 * message.$match[1])}$.`
+		`💴 Вы успешно продали золото за ${spaces(Math.floor(1250 * message.$match[1]))}$.`
 	);
 });
 vk.updates.hear(/^(?:продать)\s(?:титан)\s(.*)$/i, async (message, bot) => {
@@ -2448,16 +2447,16 @@ vk.updates.hear(/^(?:продать)\s(?:титан)\s(.*)$/i, async (message, b
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать титан [кол-во] `);
+		return message.send(`❗ Пример команды: Продать титан [кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 Руда должна быть числового вида.`);
+		return message.send(`❗ Руда должна быть числового вида.`);
 	if (user.titan < message.$match[1])
 		return message.send(` У вас нет столько титана!`);
 	user.titan -= message.$match[1]; //50 * Number(message.$match[1]);
 	user.balance += 1350 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали титан за ${spaces(1350 * message.$match[1])}$.`
+		`💴 Вы успешно продали титан за ${spaces(Math.floor(1350 * message.$match[1]))}$.`
 	);
 });
 vk.updates.hear(/^(?:продать)\s(?:алмаз)\s(.*)$/i, async (message, bot) => {
@@ -2471,16 +2470,16 @@ vk.updates.hear(/^(?:продать)\s(?:алмаз)\s(.*)$/i, async (message, b
 	);	
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать алмаз [кол-во] `);
+		return message.send(`❗ Пример команды: Продать алмаз [кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 Руда должна быть числового вида.`);
+		return message.send(`❗ Руда должна быть числового вида.`);
 	if (user.diamond < message.$match[1])
 		return message.send(` У вас нет столько алмазов!`);
 	user.diamond -= message.$match[1]; //50 * Number(message.$match[1]);
 	user.balance += 1500 * message.$match[1]; //50 * Number(message.$match[1]);
 
 	return message.send(
-		`💴 Вы успешно продали алмазы за ${spaces(1500 * message.$match[1])}$.`
+		`💴 Вы успешно продали алмазы за ${spaces(Math.floor(1500 * message.$match[1]))}$.`
 	);
 });
 
@@ -2547,10 +2546,10 @@ vk.updates.hear(/^(?:пирс снять)\s?([0-9]+)?/i, (message) => {
 		return message.send(`Вы не владелец шахты!`);
 	}
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Пирс снять [Сумма]`);
+		return message.send(`❗ Пример команды: Пирс снять [Сумма]`);
 
 	if (organizations.pier.balance < message.$match[1])
-		return message.send(`👉 На счету пирса нет столько`);
+		return message.send(`❗ На счету пирса нет столько`);
 	organizations.pier.balance -= Number(message.$match[1]);
 	user.balance += Number(message.$match[1]);
 
@@ -2719,9 +2718,9 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:окунь)\s(.*)$/i, async (m
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать рыбу окунь[кол-во] `);
+		return message.send(`❗ Пример команды: Продать рыбу окунь[кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.okyn < message.$match[1])
 		return message.send(` У вас нет столько окуня!`);
 	user.okyn -= message.$match[1];
@@ -2743,9 +2742,9 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:карась)\s(.*)$/i, async 
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать рыбу карась [кол-во] `);
+		return message.send(`❗ Пример команды: Продать рыбу карась [кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.karas < message.$match[1])
 		return message.send(` У вас нет столько карася!`);
 	user.karas -= message.$match[1];
@@ -2767,9 +2766,9 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:карп)\s(.*)$/i, async (mes
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать рыбу карп [кол-во] `);
+		return message.send(`❗ Пример команды: Продать рыбу карп [кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.karp < message.$match[1])
 		return message.send(` У вас нет столько карпа!`);
 	user.karp -= message.$match[1];
@@ -2791,9 +2790,9 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:треска)\s(.*)$/i, async 
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать рыбу треска [кол-во] `);
+		return message.send(`❗ Пример команды: Продать рыбу треска [кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.treska < message.$match[1])
 		return message.send(` У вас нет столько трески!`);
 	user.treska -= message.$match[1];
@@ -2815,9 +2814,9 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:щука)\s(.*)$/i, async (mes
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать рыбу щука [кол-во] `);
+		return message.send(`❗ Пример команды: Продать рыбу щука [кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.shyka < message.$match[1])
 		return message.send(` У вас нет столько щуки!`);
 	user.shyka -= message.$match[1];
@@ -2839,9 +2838,9 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:сом)\s(.*)$/i, async (messa
 	);
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Продать рыбу сом [кол-во] `);
+		return message.send(`❗ Пример команды: Продать рыбу сом [кол-во] `);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.som < message.$match[1])
 		return message.send(` У вас нет столько сомов!`);
 	user.som -= message.$match[1];
@@ -2863,9 +2862,9 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:кальмар|кольмар)
 	);
 		let id = user_id(message.user);
 		if (!message.$match[1])
-			return message.send(`👉 Пример команды: Продать серебро[кол-во] `);
+			return message.send(`❗ Пример команды: Продать серебро[кол-во] `);
 		if (!Number(message.$match[1]))
-			return message.send(`👉 СУММА должна быть числового вида.`);
+			return message.send(`❗ СУММА должна быть числового вида.`);
 		if (user.kalmar < message.$match[1])
 			return message.send(` У вас нет столько кальмаров!`);
 		user.kalmar -= message.$match[1];
@@ -3339,7 +3338,7 @@ vk.updates.hear(
 	/^(?:магазин одежды)\s(?:снять)\s(.*)$/i,
 	async (message, bot) => {
 		if (!message.$match[1])
-			return message.send(`👉 Пример команды: Магазин одежды снять [Сумма]`);
+			return message.send(`❗ Пример команды: Магазин одежды снять [Сумма]`);
 		let user = acc.users[u_id(message.user)];
 		message.$match[1] = message.$match[1].replace(/(\.|\,)/gi, "");
 		message.$match[1] = message.$match[1].replace(/(к|k)/gi, "000");
@@ -3353,9 +3352,9 @@ vk.updates.hear(
 		}
 
 		if (!Number(message.$match[1]))
-			return message.send(`👉 СУММА должна быть числового вида.`);
+			return message.send(`❗ СУММА должна быть числового вида.`);
 		if (organizations.pizza.balance < message.$match[1])
-			return message.send(`👉 На счету магазина нет столько`);
+			return message.send(`❗ На счету магазина нет столько`);
 		organizations.odejda.balance -= Number(message.$match[1]);
 		user.balance += Number(message.$match[1]);
 
@@ -3470,11 +3469,11 @@ vk.updates.hear(/^(?:автосалон)\s(?:снять)\s(.*)$/i, async (messag
 		return message.send(`Вы не владелец автосалона!`);
 	}
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Автосалон снять [Сумма]`);
+		return message.send(`❗ Пример команды: Автосалон снять [Сумма]`);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (organizations.avtosalon.balance < message.$match[1])
-		return message.send(`👉 На счету автосалона нет столько`);
+		return message.send(`❗ На счету автосалона нет столько`);
 	organizations.avtosalon.balance -= Number(message.$match[1]);
 	user.balance += Number(message.$match[1]);
 
@@ -3767,7 +3766,7 @@ vk.updates.hear(/^(?:бизнес)\s?([0-9]+)?/i, (message) => {
 		} else {
 			return message.send(
 				`🏤 Бизнес: ${businesses[user.business].name}
-💰 Прибыль: ${businesses[user.business].earn} $/час\n
+💰 Прибыль: ${spaces(businesses[user.business].earn)} $/час\n
 💰 На счету: ${spaces(user.bizbalance)}$\n🔸 
 Что бы снять деньги с бизнеса, ввведите "Снять [кол-во]"`
 			);
@@ -3790,11 +3789,11 @@ vk.updates.hear(/^(?:снять)\s?([0-9]+)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let id = user_id(message.user);
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Бизнес снять [Сумма]`);
+		return message.send(`❗ Пример команды: снять [Сумма]`);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.bizbalance < message.$match[1])
-		return message.send(`👉 На счету бизнеса нет столько`);
+		return message.send(`❗ На счету бизнеса нет столько`);
 	user.bizbalance -= Number(message.$match[1]);
 	user.balance += Number(message.$match[1]);
 
@@ -3995,6 +3994,7 @@ vk.updates.hear(/^(?:казино)$/i, (message) => {
 	`);
 });
 vk.updates.hear(/^(?:казино войти|войти в казино)$/i, (message) => {
+	let user = acc.users[u_id(message.user)];
 					if (user.gps != 10) return message.send(` 
 ❗Для того чтобы войти в казино, напишите "GPS 10". `)
 	let user_prefix = acc.users[u_id(organizations.casino.owner)];
@@ -4038,11 +4038,11 @@ vk.updates.hear(/^(?:казино)\s(?:снять)\s(.*)$/i, async (message, bot
 		return message.send(`Вы не владелец казино!`);
 	}
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Казино снять [Сумма]`);
+		return message.send(`❗ Пример команды: Казино снять [Сумма]`);
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (organizations.casino.balance < message.$match[1])
-		return message.send(`👉 На счету казино нет столько`);
+		return message.send(`❗ На счету казино нет столько`);
 	organizations.casino.balance -= Number(message.$match[1]);
 	user.balance += Number(message.$match[1]);
 
@@ -4542,10 +4542,10 @@ vk.updates.hear(/^(?:коткрыть 1)/i, (message) => {
 	if (containers.russia.cars.count <= 0) return message.send(`‼ Ошибка, на данный момент в порту нету контейнеров, ожидайте следущую поставку в течении часа.`)
 	if (user.balance < 1500000) return message.send(`‼ У вас недостаточно денег на игровом счету.`)
 	containers.russia.cars.count -= 1;
-	let car = utils.random(21,25)
+	let car = utils.random(16,22)
 	user.car_container = car;
 	return message.send(
-		`Вы открыли контейнер и там была ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(cars[car].price)}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
+		`❗ Вы открыли контейнер и там была ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(cars[car].price)}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
 		{attachment:cars[car].attachment,
 			keyboard: JSON.stringify({
 				inline: true,
@@ -4583,7 +4583,7 @@ vk.updates.hear(/^(?:коткрыть 2)/i, (message) => {
 	let car = utils.random(24,28)
 	user.car_container = car;
 	return message.send(
-		`Вы открыли контейнер и там была ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(cars[car].price)}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
+		`❗ Вы открыли контейнер и там была ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(cars[car].price)}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
 		{attachment:cars[car].attachment,
 			keyboard: JSON.stringify({
 				inline: true,
@@ -4620,7 +4620,7 @@ vk.updates.hear(/^(?:коткрыть 3)/i, (message) => {
 	let car = utils.random(29,35)
 	user.car_container = car;
 	return message.send(
-		`Вы открыли контейнер и там была ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(cars[car].price)}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
+		`❗ Вы открыли контейнер и там была ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(cars[car].price)}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
 		{attachment:cars[car].attachment,
 			keyboard: JSON.stringify({
 				inline: true,
@@ -4648,6 +4648,12 @@ vk.updates.hear(/^(?:коткрыть 3)/i, (message) => {
 		}
 	);
 });
+
+
+// ❗ By Malaxov 07.07.2022:18:05 
+// ❗ By Katanov 07.07.2022:18:05 
+
+
 // vk.updates.hear(/^(?:коткрыть 3)/i, (message) => {
 // 	let user = acc.users[u_id(message.user)];
 // 	if (containers.germany.cars.count <= 0) return message.send(`‼ Ошибка, на данный момент в порту нету контейнеров, ожидайте следущую поставку в течении часа.`)
@@ -5001,15 +5007,16 @@ vk.updates.hear(/^(?:подарок|🎁 Подарок)/i, (message) => {
 
 vk.updates.hear(/^(?:бонус|💶 Бонус)/i, (message) => {
 	let user = acc.users[u_id(message.user)];
-	if (user.bonus == true)
+
+	if (user.bonus_time >= Date.now())
 		return message.send(
-			`❗ Ошибка, Бонус можно получить только раз в 24 часа.`
+			`❗ Ошибка, Бонус можно получить через ${timer(
+				user.bonus_time - Date.now()
+			)}`
 		);
-	user.bonus = true;
-	setTimeout(() => {
-		user.bonus = false;
-	}, 86400000);
-	let sum = rand(100000, 250000);
+	user.bonus_time = Date.now() + 86400000;
+
+	let sum = rand(130000, 350000);
 	user.balance += Number(sum);
 	return message.send(`🎁Поздравляем! Вы получили бонус в размере  ${spaces(
 		sum
@@ -5038,7 +5045,7 @@ vk.updates.hear(/^(?:купить кейс)\s?([0-9]+)?\s?(.*)?/i, (message) => 
 	let user = acc.users[u_id(message.user)];
 
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (message.$match[1] == 1) {
 		message.$match[2] = message.$match[2].replace(/(\.|\,)/gi, "");
 		message.$match[2] = message.$match[2].replace(/(к|k)/gi, "000");
@@ -8180,7 +8187,7 @@ vk.updates.hear(/^(?:продать коин)\s?([0-9]+)?\s?(.*)?/i, (message) =
 	let user = acc.users[u_id(message.user)];
 
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (message.$match[1] == 1) {
 		message.$match[2] = message.$match[2].replace(/(\.|\,)/gi, "");
 		message.$match[2] = message.$match[2].replace(/(к|k)/gi, "000");
@@ -8192,8 +8199,8 @@ vk.updates.hear(/^(?:продать коин)\s?([0-9]+)?\s?(.*)?/i, (message) =
 		user.balance += Number(exchange.red_coin) * Number(message.$match[2]);
 		user.red_coin -= Number(message.$match[2]);
 		return message.send(
-			`Вы успешно продали ${message.$match[2]} RedCoina за ${
-				spaces(exchange.red_coin) * spaces(message.$match[2])
+			`❗ Вы успешно продали ${message.$match[2]} RedCoina за ${
+				spaces(Math.floor(exchange.red_coin)) * spaces(Math.floor(message.$match[2]))
 			}`
 		);
 	}
@@ -8208,8 +8215,8 @@ vk.updates.hear(/^(?:продать коин)\s?([0-9]+)?\s?(.*)?/i, (message) =
 		user.balance += Number(exchange.green_coin) * Number(message.$match[2]);
 		user.green_coin -= Number(message.$match[2]);
 		return message.send(
-			`Вы успешно продали ${message.$match[2]} GreenCoina за ${spaces(
-				Number(exchange.green_coin) * Number(message.$match[2])
+			`❗ Вы успешно продали ${message.$match[2]} GreenCoina за ${spaces(
+				Number(Math.floor(exchange.green_coin)) * Number(Math.floor(message.$match[2]))
 			)}`
 		);
 	}
@@ -8224,8 +8231,8 @@ vk.updates.hear(/^(?:продать коин)\s?([0-9]+)?\s?(.*)?/i, (message) =
 		user.balance += Number(exchange.blue_coin) * Number(message.$match[2]);
 		user.blue_coin -= Number(message.$match[2]);
 		return message.send(
-			`Вы успешно продали ${message.$match[2]} BlueCoina за ${spaces(
-				Number(exchange.blue_coin) * Number(message.$match[2])
+			`❗ Вы успешно продали ${message.$match[2]} BlueCoina за ${spaces(
+				Number(Math.floor(exchange.blue_coin)) * Number(Math.floor(message.$match[2]))
 			)}`
 		);
 	}
@@ -8235,7 +8242,7 @@ vk.updates.hear(/^(?:купить коин)\s?([0-9]+)?\s?(.*)?/i, (message) => 
 	let user = acc.users[u_id(message.user)];
 
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (message.$match[1] == 1) {
 		message.$match[2] = message.$match[2].replace(/(\.|\,)/gi, "");
 		message.$match[2] = message.$match[2].replace(/(к|k)/gi, "000");
@@ -8500,7 +8507,7 @@ vk.updates.hear(/^(?:магазин открыть)$/i, (message) => {
 vk.updates.hear(/^(?:магазин)\s(?:снять)\s(.*)$/i, async (message, bot) => {
 	let user = acc.users[u_id(message.user)];
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Магазин снять [Сумма]`);
+		return message.send(`❗ Пример команды: Магазин снять [Сумма]`);
 	message.$match[1] = message.$match[1].replace(/(\.|\,)/gi, "");
 	message.$match[1] = message.$match[1].replace(/(к|k)/gi, "000");
 	message.$match[1] = message.$match[1].replace(/(м|m)/gi, "000000");
@@ -8512,9 +8519,9 @@ vk.updates.hear(/^(?:магазин)\s(?:снять)\s(.*)$/i, async (message, b
 		return message.send(`Вы не владелец магазина!`);
 	}
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (organizations.shop.balance < message.$match[1])
-		return message.send(`👉 На счету магазина нет столько`);
+		return message.send(`❗ На счету магазина нет столько`);
 	organizations.shop.balance -= Number(message.$match[1]);
 	user.balance += Number(message.$match[1]);
 
@@ -8567,7 +8574,7 @@ vk.updates.hear(/^(?:пиццерия открыть)$/i, (message) => {
 
 vk.updates.hear(/^(?:пиццерия)\s(?:снять)\s(.*)$/i, async (message, bot) => {
 	if (!message.$match[1])
-		return message.send(`👉 Пример команды: Пиццерия снять [Сумма]`);
+		return message.send(`❗ Пример команды: Пиццерия снять [Сумма]`);
 	let user = acc.users[u_id(message.user)];
 	message.$match[1] = message.$match[1].replace(/(\.|\,)/gi, "");
 	message.$match[1] = message.$match[1].replace(/(к|k)/gi, "000");
@@ -8581,9 +8588,9 @@ vk.updates.hear(/^(?:пиццерия)\s(?:снять)\s(.*)$/i, async (message,
 	}
 
 	if (!Number(message.$match[1]))
-		return message.send(`👉 СУММА должна быть числового вида.`);
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (organizations.pizza.balance < message.$match[1])
-		return message.send(`👉 На счету пиццерии нет столько`);
+		return message.send(`❗ На счету пиццерии нет столько`);
 	organizations.pizza.balance -= Number(message.$match[1]);
 	user.balance += Number(message.$match[1]);
 
@@ -9415,6 +9422,9 @@ vk.updates.hear(/^(?:adding)$/i, async (message, bot) => {
 	for (i = 0; i < 20000; i++) {
 		if (acc.users[i]) {
 			acc.users[i].car_container = false;
+			acc.users[i].bonus_time = false;
+			acc.users[i].container_time = false;
+			acc.users[i].container_gift = false;
 		}
 	}
 	return message.send(`готово!`);
@@ -9719,6 +9729,22 @@ function testStr(str)
 {
     if ( !/^[a-zA-Z-А-Я-а-я]+$/.test(str) ) return false;
     return true;
+}
+
+function timer(stamp) {
+	stamp = stamp / 1000;
+	let s = stamp % 60;
+	stamp = (stamp - s) / 60;
+	let m = stamp % 60;
+	stamp = (stamp - m) / 60;
+	let h = stamp % 24;
+	let d = (stamp - h) / 24;
+	let text = ``;
+	if (d > 0) text += Math.floor(d) + " д ";
+	if (h > 0) text += Math.floor(h) + " ч ";
+	if (m > 0) text += Math.floor(m) + " мин ";
+	if (s > 0) text += Math.floor(s) + " сек ";
+	return text;
 }
 
 async function run() {try {await vk.updates.startPolling();} catch (error) {console.log(error);}}
