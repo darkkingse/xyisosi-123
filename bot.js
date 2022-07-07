@@ -2329,7 +2329,7 @@ vk.updates.hear(/^(?:продать)\s(?:медь)\s(.*)$/i, async (message, bot
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать медь[кол-во] `);
-	if (!Number(message.$match[1]))
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
 		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.copper < message.$match[1])
 		return message.send(` У вас нет столько меди!`);
@@ -2353,7 +2353,7 @@ vk.updates.hear(/^(?:продать)\s(?:железо)\s(.*)$/i, async (message,
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать железо[кол-во] `);
-	if (!Number(message.$match[1]))
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
 		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.iron < message.$match[1])
 		return message.send(` У вас нет столько железа!`);
@@ -2377,7 +2377,7 @@ vk.updates.hear(/^(?:продать)\s(?:металл)\s(.*)$/i, async (message,
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать металл [кол-во] `);
-	if (!Number(message.$match[1]))
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
 		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.metall < message.$match[1])
 		return message.send(` У вас нет столько металла!`);
@@ -2401,7 +2401,7 @@ vk.updates.hear(/^(?:продать)\s(?:серебро)\s(.*)$/i, async (messag
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать серебро[кол-во] `);
-	if (!Number(message.$match[1]))
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
 		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.silver < message.$match[1])
 		return message.send(` У вас нет столько Серебра!`);
@@ -2425,8 +2425,8 @@ vk.updates.hear(/^(?:продать)\s(?:золото)\s(.*)$/i, async (message,
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать золото[кол-во] `);
-	if (!Number(message.$match[1]))
-		return message.send(`❗ Руда должна быть числового вида.`);
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.gold < message.$match[1])
 		return message.send(` У вас нет столько золота!`);
 	user.gold -= message.$match[1]; //50 * Number(message.$match[1]);
@@ -2448,8 +2448,8 @@ vk.updates.hear(/^(?:продать)\s(?:титан)\s(.*)$/i, async (message, b
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать титан [кол-во] `);
-	if (!Number(message.$match[1]))
-		return message.send(`❗ Руда должна быть числового вида.`);
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.titan < message.$match[1])
 		return message.send(` У вас нет столько титана!`);
 	user.titan -= message.$match[1]; //50 * Number(message.$match[1]);
@@ -2471,8 +2471,8 @@ vk.updates.hear(/^(?:продать)\s(?:алмаз)\s(.*)$/i, async (message, b
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать алмаз [кол-во] `);
-	if (!Number(message.$match[1]))
-		return message.send(`❗ Руда должна быть числового вида.`);
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.diamond < message.$match[1])
 		return message.send(` У вас нет столько алмазов!`);
 	user.diamond -= message.$match[1]; //50 * Number(message.$match[1]);
@@ -2719,7 +2719,7 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:окунь)\s(.*)$/i, async (m
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать рыбу окунь[кол-во] `);
-	if (!Number(message.$match[1]))
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
 		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.okyn < message.$match[1])
 		return message.send(` У вас нет столько окуня!`);
@@ -2743,7 +2743,7 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:карась)\s(.*)$/i, async 
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать рыбу карась [кол-во] `);
-	if (!Number(message.$match[1]))
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
 		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.karas < message.$match[1])
 		return message.send(` У вас нет столько карася!`);
@@ -2767,7 +2767,7 @@ vk.updates.hear(/^(?:продать рыбу)\s(?:карп)\s(.*)$/i, async (mes
 	let id = user_id(message.user);
 	if (!message.$match[1])
 		return message.send(`❗ Пример команды: Продать рыбу карп [кол-во] `);
-	if (!Number(message.$match[1]))
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
 		return message.send(`❗ СУММА должна быть числового вида.`);
 	if (user.karp < message.$match[1])
 		return message.send(` У вас нет столько карпа!`);
@@ -4080,6 +4080,8 @@ vk.updates.hear(/^(?:казино открыть)$/i, (message) => {
 vk.updates.hear(/^(?:кдонат)\s?(.*)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	if(message.$match[1] > user.donate) return message.send(`У вас недостаточно DonatMoney`)
+	if (!Number(message.$match[1]) || message.$match[1] < 0)
+		return message.send(`❗ СУММА должна быть числового вида.`);
 	let dm = message.$match[1] * 100000
 	user.donate -= message.$match[1]
 	user.balance += Number(dm)
@@ -5423,26 +5425,32 @@ vk.updates.hear(/^(?:delvip)\s?([0-9]+)?/i, (message) => {
 
 vk.updates.hear(/^(?:донат|💷 Донат)\s?([0-9]+)?/i, (message) => {
 	return message.send(`
-		▪ Донат-меню ▪
+		🚀Донат-меню🚀
 
-		💳Валюта:
-		💸 1 DM - 100.000 вирт.
+💳Валюта:
+💸 1 DM - 100.000 вирт.
+❗Для того чтобы перевести DM в виртуальную валюту введите "Кдонат [сумма DM]" ❗
 
-		▪ Донат бизнесы -
-		🚚Шахта - 350 рублей.
-		🚘Автосалон - 200 рублей.
-		🦈Пирс - 250 рублей.
-		💵Казино - 300 рублей.
-		💰Магазин - 100 рублей.
-		👕Магазин одежды - 150 рублей.
-		🍕Пиццерия - 200 рублей.
+▪ Донат бизнесы -
+🚚Шахта - 350 рублей.
+🚘Автосалон - 200 рублей.
+🦈Пирс - 250 рублей.
+💵Казино - 300 рублей.
+💰Магазин - 100 рублей.
+👕Магазин одежды - 150 рублей.
+🍕Пиццерия - 200 рублей.
 
-		🔮СУПЕР ВОЗМОЖНОСТИ:
-		🚀Гипермашина - 1500 рублей. (Многочисленное количество ресурсов на шахте за один ввод).
-		🔧Супер кирка ( х2 ресурсы на шахте) - 500 рублей.
-		🔭Супер удочка ( х3 рыб на рыбалке) - 350 рублей.
+🔮СУПЕР ВОЗМОЖНОСТИ:
+🚀Гипермашина - 1500 рублей. (Многочисленное количество ресурсов на шахте за один ввод).
+🔧Супер кирка ( х2 ресурсы на шахте) - 500 рублей.
+🔭Супер удочка ( х3 рыб на рыбалке) - 350 рублей.
 
-		⛔ По поводу покупки писать в Репорт или Основателю @maxim_lesnoy. 
+🔥VIP-Статус:
+🎁VIP - 7 дней ( 50 рублей)
+🗡VIP - 15 дней ( 120 рублей)
+🚀VIP - 30 дней ( 500 рублей)
+
+⛔ По поводу покупки писать в Репорт или Основателю @maxim_lesnoy. 
 	`);
 });
 
