@@ -2952,11 +2952,9 @@ vk.updates.hear(/^(?:дом)\s?([0-9]+)?/i, (message) => {
 		if (user.house == false) {
 			for (i in houses) {
 				count += 1;
-				if (user.balance >= houses[i].price) {
-					text += `${count}&#8419;. ${houses[i].name} | ${spaces(
-						houses[i].price
-					)}$\n`;
-				}
+				text += `${count}&#8419;. ${houses[i].name} | ${spaces(
+					houses[i].price
+				)}$\n`;
 			}
 
 			return message.send(` 
