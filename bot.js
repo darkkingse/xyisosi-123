@@ -2647,33 +2647,65 @@ vk.updates.hear(/^(?:рыбачить)$/i, (message) => {
 	setTimeout(() => {
 		user.ribalka = false;
 	}, 3000);
-	organizations.pier.balance += organizations.pier.salary;
-	user.okyn += okyn;
-	user.karas += karas;
-	user.shyka += shyka;
-	user.som += som;
-	user.kalmar += kalmar;
-	user.karp += karp;
-	user.treska += treska;
-	user.ydochka -= 5;
-	user.golod -= 5;
-	user.hp -= hp;
+    if (user.super_ydochka) {
+				organizations.pier.balance += organizations.pier.salary;
+		user.okyn += okyn * 3
+		user.karas += karas * 3;
+		user.shyka += shyka * 3;
+		user.som += som * 3;
+		user.kalmar += kalmar * 3;
+		user.karp += karp * 3;
+		user.treska += treska * 3;
+		user.ydochka -= 5;
+		user.golod -= 5;
+		user.hp -= hp;
+	
+		return message.send(` 
+		🌊 Вы выловили рыбу:
+	🐟 Окунь: ${okyn * 3}
+	🐡 Карась: ${karas * 3}
+	🐠 Карп: ${karp * 3}
+	🐬 Треска: ${treska * 3}
+	🐳 Щука: ${shyka * 3}
+	🦈 Сом: ${som * 3 }
+	🦐 Кальмар: ${kalmar * 3}
+	
+	❗ У вас используется Супер-Удочка, поэтому вся рыба умножается на 3.
 
-	return message.send(` 
-	🌊 Вы выловили рыбу:
-🐟 Окунь: ${okyn}
-🐡 Карась: ${karas}
-🐠 Карп: ${karp}
-🐬 Треска: ${treska}
-🐳 Щука: ${shyka}
-🦈 Сом: ${som}
-🦐 Кальмар: ${kalmar}
-
-❓ Показатели уменьшены: 
-🎣 Удочка: ${user.ydochka}%
-🍗 Голод: ${user.golod}%
-❤ Здоровье: ${user.hp}%
-	`);
+	❓ Показатели уменьшены: 
+	🎣 Удочка: ${user.ydochka}%
+	🍗 Голод: ${user.golod}%
+	❤ Здоровье: ${user.hp}%
+		`);
+	} else {
+		organizations.pier.balance += organizations.pier.salary;
+		user.okyn += okyn;
+		user.karas += karas;
+		user.shyka += shyka;
+		user.som += som;
+		user.kalmar += kalmar;
+		user.karp += karp;
+		user.treska += treska;
+		user.ydochka -= 5;
+		user.golod -= 5;
+		user.hp -= hp;
+	
+		return message.send(` 
+		🌊 Вы выловили рыбу:
+	🐟 Окунь: ${okyn}
+	🐡 Карась: ${karas}
+	🐠 Карп: ${karp}
+	🐬 Треска: ${treska}
+	🐳 Щука: ${shyka}
+	🦈 Сом: ${som}
+	🦐 Кальмар: ${kalmar}
+	
+	❓ Показатели уменьшены: 
+	🎣 Удочка: ${user.ydochka}%
+	🍗 Голод: ${user.golod}%
+	❤ Здоровье: ${user.hp}%
+		`);
+	}
 });
 
 vk.updates.hear(/^(?:продать рыбу)\s(?:окунь)\s(.*)$/i, async (message, bot) => {
@@ -4840,7 +4872,7 @@ vk.updates.hear(/^(?:кейс открыть 4|📦 Кейс открыть 4)/i
 
 	user.car_case = car;
 	return message.send(
-		`Вы выиграли ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(Math.floor(cars[car].price))}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.7))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
+		`Вы выиграли ${cars[car].name}🚘\n 🌅Государственная стоимость: ${spaces(Math.floor(cars[car].price))}$\n 💰 Продажа Государству: ${spaces(Math.floor(cars[car].price * 0.4))}$\n❓Для того, что забрать свой приз, используйте команду:Авто забрать\n ❗ Для продажи машины, используйте команду:Авто продать`,
 		{attachment:cars[car].attachment,
 			keyboard: JSON.stringify({
 				inline: true,
@@ -4935,8 +4967,8 @@ vk.updates.hear(/^(?:кейс открыть 5|📦 Кейс открыть 5)/i
 vk.updates.hear(/^(?:авто продать|🚫 Авто продать)/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	if (!user.car_case && !user.car_container) return message.send(`❗ Вам не выпадала машина с кейса/контейнера`)
-	user.balance += cars[user.car_case == false ? user.car_container : user.car_case].price * 0.7
-	message.send(`✅ Вы успешно продали Автомобиль за: ${spaces(Math.floor(cars[user.car_case == false ? user.car_container : user.car_case].price * 0.7))}$`)
+	user.balance += cars[user.car_case == false ? user.car_container : user.car_case].price * 0.4
+	message.send(`✅ Вы успешно продали Автомобиль за: ${spaces(Math.floor(cars[user.car_case == false ? user.car_container : user.car_case].price * 0.4))}$`)
 	user.car_case == false ? user.car_container = false : user.car_case = false;
 })
 vk.updates.hear(/^(?:авто забрать|✅ Авто забрать)/i, (message) => {
@@ -5160,6 +5192,8 @@ vk.updates.hear(/^(?:ahelp|апомощь|акоманды|ахелп|апм|а�
 			⛏removegiper [id] - забрать гипермашину у игрока [NEW]
 			⛏setkirka [id] - забрать гипермашину у игрока [NEW]
 			⛏removekirka [id] - забрать гипермашину у игрока [NEW]
+			🎣setydochka [id] - выдать удочку игроку [NEW]
+			🎣removeydochka [id] - забрать удочку у игрока [NEW]
 			🗣repban [id] - Выдать игроку бан репорта[NEW]
 			🗣unrep [id] - Забрать бан репорта у игрока[NEW]
 			☠сопгсет [id] - назначить владельца СОПГ
@@ -5216,6 +5250,37 @@ vk.updates.hear(/^(?:setkirka)\s?([0-9]+)?/i, (message) => {
 		`▪ Вы успешно выдали игроку ${user_id.prefix} Супер-Кирку !`
 	);
 });
+vk.updates.hear(/^(?:setydochka)\s?([0-9]+)?/i, (message) => {
+	let user = acc.users[u_id(message.user)];
+	let user_id = acc.users[message.$match[1]];
+	if (user.admin < 7)
+		return message.send(`❗Ошибка! У вас нет доступа к данной команде.`);
+	if (!message.$match[1]) return message.send(`❗ Ошибка, укажите ID ...`);
+	user_id.super_ydochka = true;
+	vk.api.call("messages.send", {
+		user_id: acc.users[message.$match[1]].id,
+		message: `❗ Администратор Вам выдал Супер-Удочку \nТеперь вы можете ловить рыбу в два раза больше!`,
+	});
+	return message.send(
+		`▪ Вы успешно выдали игроку ${user_id.prefix} Супер-Удачку !`
+	);
+});
+vk.updates.hear(/^(?:removeydochka)\s?([0-9]+)?/i, (message) => {
+	let user = acc.users[u_id(message.user)];
+	let user_id = acc.users[message.$match[1]];
+	if (user.admin < 7)
+		return message.send(`❗Ошибка! У вас нет доступа к данной команде.`);
+	if (!message.$match[1]) return message.send(`❗ Ошибка, укажите ID ...`);
+	user_id.super_kirka = false;
+	vk.api.call("messages.send", {
+		user_id: acc.users[message.$match[1]].id,
+		message: `❗ Администратор забрал у Вас Супер-Удочку`,
+	});
+	return message.send(
+		`▪ Вы успешно забрали у игрока ${user_id.prefix} супер-удочку !`
+	);
+});
+
 vk.updates.hear(/^(?:removegiper)\s?([0-9]+)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 	let user_id = acc.users[message.$match[1]];
