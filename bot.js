@@ -2487,6 +2487,8 @@ vk.updates.hear(/^(?:продать)\s(?:алмаз)\s(.*)$/i, async (message, b
 /////////////////////////////////////////////////////////////////////////////
 
 vk.updates.hear(/^(?:пирс)$/i, (message) => {
+		let user = acc.users[u_id(message.user)];
+
 	let user_prefix = acc.users[u_id(organizations.pier.owner)];
 		if (user.gps != 5) return message.send(`❗Ошибка! Для того чтобы рыбачить, перейдите в пирс. 
 ❗Для того чтобы перейти в автосалон напишите "GPS 5". `)
@@ -3951,6 +3953,8 @@ vk.updates.hear(/^(?:банк снять)\s?(.*)?/i, (message) => {
 });
 vk.updates.hear(/^(?:казино)$/i, (message) => {
 	let user_prefix = acc.users[u_id(organizations.casino.owner)];
+	let user = acc.users[u_id(message.user)];
+
 				if (user.gps != 10) return message.send(` 
 ❗Для того чтобы перейти в казино, напишите "GPS 10". `)
 	return message.send(`
