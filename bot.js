@@ -4047,6 +4047,15 @@ vk.updates.hear(/^(?:казино открыть)$/i, (message) => {
 	}
 });
 
+vk.updates.hear(/^(?:кдонат)\s?(.*)?/i, (message) => {
+	let user = acc.users[u_id(message.user)];
+	if(message.$match[1] > user.donate) return message.send(`У вас недостаточно DonatMoney`)
+	let dm = message.$match[1] * 100000
+	user.donate -= message.$match[1]
+	user.balance += Number(dm)
+	return message.send(`❗Вы успешно обменяли ${message.$match[1]} DM на ${spaces(Math.floor(dm))}$`)
+})
+
 vk.updates.hear(/^(?:ставка|🎲 Ставка)\s?(.*)?/i, (message) => {
 	let user = acc.users[u_id(message.user)];
 					if (user.gps != 10) return message.send(` 
@@ -7519,6 +7528,7 @@ vk.updates.hear(/^(?:взять 1)\s?([0-9]+)?/i, (message) => {
 
 ///////////////////////////////////////////////////////////////////////
 vk.updates.hear(/^(?:Больница|👨‍⚕ Больница)$/i, (message) => {
+	let user = acc.users[u_id(message.user)];
 	let user_prefix = acc.users[u_id(organizations.hospital.owner)];
 			if (user.gps != 8) return message.send(` 
 ❗Для того чтобы перейти в больницу напишите "GPS 8". `)
